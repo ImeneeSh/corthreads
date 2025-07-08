@@ -4,14 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.beans.factory.annotation.Autowired ;
-import javax.sql.DataSource;
 
 @SpringBootApplication
 public class CorthreadsApplication implements CommandLineRunner {
-
-    @Autowired
-    private DataSource dataSource;
 
     public static void main(String[] args) {
 
@@ -19,7 +14,7 @@ public class CorthreadsApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         System.out.println("connexion reussi !");
     }
 
