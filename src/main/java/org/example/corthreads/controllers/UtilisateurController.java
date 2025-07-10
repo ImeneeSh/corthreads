@@ -6,7 +6,6 @@ import org.example.corthreads.models.Role;
 import org.example.corthreads.models.Utilisateur ;
 import org.example.corthreads.services.UtilisateurService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
