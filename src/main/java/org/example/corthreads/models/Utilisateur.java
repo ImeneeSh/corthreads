@@ -1,5 +1,6 @@
 package org.example.corthreads.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +25,12 @@ public class Utilisateur {
     private String wilaya ;
 
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateNaissance ; //LocalDate correspond au DATE dans sql
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Genre genre ;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -36,7 +42,7 @@ public class Utilisateur {
     @Enumerated(EnumType.STRING)
     private GroupeSang groupeSang;
 
-    private String rh;
+    private Rh rh;
 
     private String specialite ;
 
@@ -60,15 +66,6 @@ public class Utilisateur {
     @Column(name = "aDonneFoie")
     private boolean aDonneFoie;
 
-}
-enum Role {
-    Citoyen,
-    Medecin,
-    Admin
-}
-
-enum GroupeSang {
-    A, B, AB, O
 }
 
 
