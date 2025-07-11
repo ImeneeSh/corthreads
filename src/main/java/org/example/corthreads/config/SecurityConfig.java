@@ -26,7 +26,7 @@ public class SecurityConfig {
                     return corsConfig;
                 }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/utilisateurs/**", "/api/posts/**").permitAll()
+                        .requestMatchers("/api/utilisateurs/**", "/api/posts/**","/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
