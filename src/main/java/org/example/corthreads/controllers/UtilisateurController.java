@@ -39,4 +39,6 @@ public class UtilisateurController {
 
         return utilisateurService.rechercherUtilisateurs(nom, prenom, wilaya, genre, role, groupeSang);
     }
+
+
 }
