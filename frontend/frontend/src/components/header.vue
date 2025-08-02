@@ -220,6 +220,7 @@
     .seConnecter-button.menu-version {
       width: 100%;
       margin-top: 16px;
+      display: block !important;
     }
   }
 </style>
