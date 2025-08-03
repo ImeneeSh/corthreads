@@ -15,9 +15,26 @@
     </nav>
 
     <div class="section-droite">
-      <button class="icon-language">
-        <img src="@/assets/global.png" alt="Langues" />
-      </button>
+
+      <div class="lang-select">
+        <button class="icon-language" @click.stop="gerermenulang">
+          <img src="@/assets/global.png" alt="Langues" />
+        </button>
+
+        <div v-if="langVisible" class="lang-dropdown">
+          <div class="langue-option" :class="{ active: selectedLang === 'fr'}" @click.stop="changerLangue('fr')">
+            <img src="@/assets/france.png" alt="Français" />
+            <span>Français</span>
+          </div>
+
+          <div class="langue-option" :class="{ active: selectedLang === 'en'}" @click.stop="changerLangue('en')">
+            <img src="@/assets/royaume-uni.png" alt="Anglais" />
+            <span>Anglais</span>
+          </div>
+
+        </div>
+      </div>
+
       <button class="seConnecter-button">Se Connecter</button>
     </div>
   </header>
@@ -201,6 +218,70 @@
     display : none ;
   }
 
+  .lang-select {
+    position: relative;
+    display: inline-block;
+  }
+
+  .lang-dropdown {
+    position: absolute;
+    top : 40px ;
+    right :0 ;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 8px 0;
+    z-index : 50;
+    width: 190px ;
+    height : 90px ;
+  }
+
+  .langue-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px ;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .langue-option:hover {
+    background-color: #FA6E89;
+    color: white;
+    border-radius: 12px ;
+  }
+
+.langue-option:hover span{
+  color: white;
+}
+
+  .langue-option img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .langue-option span {
+    color : #103056;
+  }
+
+  .langue-option.active {
+    background-color: #FA6E89;
+    border-radius: 12px ;
+  }
+
+  .langue-option.active span {
+    color: white;
+  }
+
+  .lang-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px ;
+    align-items: center;
+    justify-content: center;
+  }
+
   @media (max-width: 768px){
 
     .mobile-only {
@@ -226,10 +307,12 @@
 </style>
 <script setup>
 
-import {ref} from 'vue' ;
+import {onBeforeMount, onMounted, ref} from 'vue' ;
 
 const menuActive = ref(false);
 const pageActive = ref('Accueil');
+const langVisible = ref(false);
+const selectedLang = ref('fr');
 
 function gererMenu(){
   menuActive.value = !menuActive.value ;
@@ -242,5 +325,30 @@ function fermerMenu() {
 function changerPage(newPage) {
   pageActive.value = newPage ;
   fermerMenu();
+}
+
+function gerermenulang(){
+  langVisible.value = ! langVisible.value ;
+}
+
+function gererClick(e) {
+  const langMenu = document.querySelector('.lang-select');
+
+  if(langMenu && !langMenu.contains(e.target)) {
+    langVisible.value = false;
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('click',gererClick);
+});
+
+onBeforeMount(() => {
+  window.removeEventListener('click',gererClick);
+});
+
+function changerLangue(langue) {
+  selectedLang.value = langue;
+  langVisible.value = false;
 }
 </script>
