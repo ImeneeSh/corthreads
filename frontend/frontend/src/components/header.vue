@@ -9,7 +9,7 @@
     </div>
 
     <nav class="nav-links">
-      <a href="#">Accueil</a>
+      <router-link to="/" class="nav-item">Accueil</router-link>
       <a href="#">Témoignages</a>
       <a href="#">Appels à dons</a>
     </nav>
@@ -68,13 +68,16 @@
 }
 
 .header {
+  position : fixed ;
+  top: 0;
+  left: 0;
+  width: 100% ;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 32px;
   background-color: white;
   border-bottom: 1px solid #D0D0D0;
-  position : relative;
   z-index: 10;
 }
 
