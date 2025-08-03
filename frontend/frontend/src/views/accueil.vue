@@ -215,6 +215,107 @@ cite {
   max-width: 600px;
   margin-bottom: 24px;
 }
+
+@media (max-width: 768px){
+
+  .accueil-container {
+    padding-top: 70px;
+  }
+
+  /* section hero */
+
+  .hero {
+    height: 320px  ;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-content {
+    position: absolute;
+    text-align: center;
+    padding: 50px 20px 0;
+  }
+
+  .hero-titre {
+    font-size: 32px ;
+    margin-bottom: 12px;
+  }
+
+  .hero-subtitle {
+    font-size: 18px ;
+    margin-bottom: 20px;
+  }
+
+  .cta-button.premier {
+    margin-top: 10px;
+  }
+
+  .hero-bg {
+    height: 100% ;
+    object-fit: cover;
+  }
+
+  /* section témoignage*/
+
+  .section-temoignage h2{
+    font-size: 24px ;
+  }
+
+  .temoignage-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .temoignage-content img {
+    max-width: 100%;
+  }
+
+  blockquote {
+    font-size: 16px;
+  }
+
+  .cta-button.deuxieme {
+    margin: 20px auto 40px auto;
+    display: block;
+  }
+
+  /* section dons */
+
+  .dons-header {
+    flex-direction: column;
+    padding: 0 ;
+    text-align: center;
+  }
+
+  .dons-header h2 {
+    font-size: 24px;
+    margin: 20px 0;
+  }
+
+  .dons-header img {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 20px ;
+  }
+
+  .cta-button.troisieme {
+    margin: 0 auto 40px auto;
+    display: block;
+  }
+
+  /* les boutons */
+  .cta-button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .fleche-icon {
+    height: 14px;
+    width: 14px;
+  }
+}
 </style>
 <script setup>
 import AOS from 'aos'
