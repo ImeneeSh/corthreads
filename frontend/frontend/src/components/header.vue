@@ -124,9 +124,16 @@
   margin-right: 20px ;
 }
 
+.section-droite {
+  display: flex ;
+  align-items: center;
+  gap: 12px ;
+}
+
 .icon-language img {
   height: 22px;
   width: 22px;
+  vertical-align: middle;
 }
 
 .seConnecter-button {
@@ -226,27 +233,16 @@
     display: inline-block;
   }
 
-  .lang-dropdown {
-    position: absolute;
-    top : 40px ;
-    right :0 ;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    padding: 8px 0;
-    z-index : 50;
-    width: 190px ;
-    height : 90px ;
-  }
-
   .langue-option {
     display: flex;
+    width: 100% ;
     align-items: center;
     justify-content: center;
     gap: 10px ;
-    padding: 8px 12px;
+    padding: 12px 16px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    border-radius: 8px ;
   }
 
   .langue-option:hover {
@@ -255,9 +251,9 @@
     border-radius: 12px ;
   }
 
-.langue-option:hover span{
+  .langue-option:hover span{
   color: white;
-}
+  }
 
   .langue-option img {
     width: 20px;
@@ -281,8 +277,17 @@
     display: flex;
     flex-direction: column;
     gap: 10px ;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
+    padding: 12px ;
+    border-radius: 12px ;
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    position: absolute;
+    top : 40px ;
+    right :0 ;
+    width: 190px;
+    z-index: 50;
   }
 
   @media (max-width: 768px){
