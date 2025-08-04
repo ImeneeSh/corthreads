@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <button class="seConnecter-button">Se Connecter</button>
+      <router-link to="/connexion" class="seConnecter-button">Se Connecter</router-link>
     </div>
   </header>
 
@@ -46,7 +46,7 @@
     <img src="@/assets/logo-removebg-preview.png" alt="Logo" class="logo"/>
 
     <div class="menu-button mobile-only">
-      <button class="seConnecter-button menu-version">Se Connecter</button>
+      <router-link to="/connexion" class="seConnecter-button menu-version">Se Connecter</router-link>
     </div>
     <ul class="menu-links">
       <li><a href="#" :class="{ active : pageActive === 'Accueil'}" @click="changerPage('Accueil')">Accueil</a></li>
@@ -146,6 +146,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .seConnecter-button:hover {
