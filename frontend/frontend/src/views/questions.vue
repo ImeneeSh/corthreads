@@ -20,7 +20,7 @@
     </section>
 
     <section class="faq-footer">
-      <p>D'autres questions ? n'hésitez pas à <a href="#">nous contacter</a></p>
+      <p>D'autres questions ? n'hésitez pas à <router-link to="/contacter">nous contacter</router-link></p>
     </section>
   </div>
 </template>
