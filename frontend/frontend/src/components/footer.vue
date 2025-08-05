@@ -9,7 +9,7 @@
       <div class="section-milieu">
         <h3>Un besoin ? une question ?</h3>
         <div class="links">
-          <a href="#">Questions Fréquement Posées</a>
+          <router-link to="/questions">Questions Fréquement Posées</router-link>
           <span>|</span>
           <a href="#">A propos</a>
           <span>|</span>
