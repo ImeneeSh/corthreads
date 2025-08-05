@@ -137,7 +137,7 @@
   }
 
   .faq-image {
-    max-width: 100% ;
+    max-width: 90% ;
     height: auto ;
   }
 
