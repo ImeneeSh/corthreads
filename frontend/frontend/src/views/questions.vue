@@ -142,7 +142,7 @@
   }
 
   .faq-question {
-    paddding: 16px ;
+    padding: 16px ;
     font-size: 16px ;
   }
 
