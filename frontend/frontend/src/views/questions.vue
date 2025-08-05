@@ -34,7 +34,7 @@
   color: #103056;
   max-width: 90% ;
   margin: auto;
-  padding: 85px 32px 32px;
+  padding: 100px 32px 32px;
 }
 
 .faq-hero {
@@ -124,7 +124,7 @@
 
 @media screen and (max-width: 768px){
   .faq-page {
-    padding: 85px 16px 16px ;
+    padding: 100px 16px 16px ;
     max-width: 100% ;
   }
 
