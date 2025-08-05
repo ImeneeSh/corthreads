@@ -13,7 +13,7 @@
           <span>|</span>
           <router-link to="/a_propos">A propos</router-link>
           <span>|</span>
-          <a href="#">Nous contacter</a>
+          <router-link to="/contacter">Nous contacter</router-link>
         </div>
       </div>
 

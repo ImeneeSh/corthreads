@@ -3,6 +3,7 @@ import Accueil from '@/views/accueil.vue'
 import Connexion from '@/views/connexion.vue'
 import Questions from '@/views/questions.vue'
 import Apropos from '@/views/a_propos.vue'
+import Contacter from '@/views/contacter.vue'
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: '/a_propos',
         name: 'Apropos',
         component: Apropos
+    },
+    {
+        path: '/contacter',
+        name: 'Contacter',
+        component: Contacter
     }
     //les autres ici
 ]
