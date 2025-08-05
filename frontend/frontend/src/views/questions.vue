@@ -57,7 +57,7 @@
 }
 
 .faq-image {
-  max-width: 500px ;
+  max-width: 400px ;
   margin-bottom : 32px ;
   margin-top: 0 ;
 }
