@@ -2,7 +2,7 @@
   <div class="connexion">
     <div class="illustration">
       <img src="@/assets/logo-removebg-preview.png" alt="logo" class="logo"/>
-      <img src="@/assets/connexion.png" alt="illustration" class="personne" />
+      <img src="@/assets/connexion-removebg-preview.png" alt="illustration" class="personne" />
     </div>
 
     <div class="formulaire">
@@ -47,22 +47,25 @@
 
 .illustration {
   width: 50% ;
-  background-color: #C1CEFD;
+  background : linear-gradient(135deg, #C1CEFD 0%, #AAB8F5 100%);
   display: flex ;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 40px ;
+  position: relative;
 }
 
 .logo {
-  height: 130px ;
+  height: 150px ;
   margin-top : 30px ;
 }
 
 .personne {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  max-width: 400px ;
+  height: auto ;
+  object-fit: contain ;
 }
 
 .formulaire {
