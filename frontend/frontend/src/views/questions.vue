@@ -121,6 +121,50 @@
   font-weight: 700;
   font-family: 'Quicksand', sans-serif;
 }
+
+@media screen and (max-width: 768px){
+  .faq-page {
+    padding: 85px 16px 16px ;
+    max-width: 100% ;
+  }
+
+  .faq-hero h2 {
+    font-size: 18px ;
+  }
+
+  .faq-hero h3 {
+    font-size: 22px ;
+  }
+
+  .faq-image {
+    max-width: 100% ;
+    height: auto ;
+  }
+
+  .faq-question {
+    paddding: 16px ;
+    font-size: 16px ;
+  }
+
+  .faq-reponse {
+    font-size: 15px ;
+    padding: 12px 16px ;
+  }
+
+  .icon img {
+    width: 14px ;
+    height: 14px ;
+  }
+
+  .faq-footer {
+    font-size: 14px ;
+    padding: 16px ;
+  }
+
+  .faq-footer p {
+    line-height: 1.4 ;
+  }
+}
 </style>
 <script setup>
 import {ref} from 'vue' ;
