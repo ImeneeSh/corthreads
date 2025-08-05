@@ -9,10 +9,10 @@
       <div class="box">
         <h2>Bienvenue sur Corthreads</h2>
 
-        <form @submit.prevent>
-          <input type="email" placeholder="Email" required/>
+        <form @submit.prevent="connexion">
+          <input type="email" v-model="email" placeholder="Email" required/>
           <div class="mdp-wrapper">
-            <input :type="motDePasseVisible ? 'text' : 'password'" placeholder="Mot de passe" required />
+            <input :type="motDePasseVisible ? 'text' : 'password'" v-model="motDePasse" placeholder="Mot de passe" required />
             <img :src="motDePasseVisible ? voir : cacher " alt="voir" class="oeil" @click="motDePasseVisible = !motDePasseVisible" />
           </div>
 
@@ -226,12 +226,17 @@ input:focus {
 <script setup>
 
 import { onMounted , onBeforeMount, ref } from "vue" ;
+import axios from "axios" ;
+
 import voir from "@/assets/oeil (1).png";
 import cacher from "@/assets/cacher (1).png" ;
 
 import { signInWithPopup , auth ,provider } from "@/firebase.js";
 
 const motDePasseVisible = ref(false);
+
+const email=('');
+const motDePasse= ref ('');
 
 onMounted(() => {
   document.body.classList.add('no-scroll');
@@ -251,5 +256,18 @@ function connexionGgl() {
       .catch((error) => {
         console.error("Erreur Google : " ,error);
       });
+}
+
+async function connexion(){
+  try {
+    const reponse = await axios.post("http://localhost:8080/api/auth/connexion", {
+      idUser: email.value ,
+      mdp: motDePasse.value,
+    });
+
+    console.log("Connexion réussie :", reponse.data);
+  } catch(error){
+    console.error("Erreur de connexion , vérifier vos identifiants !:", error);
+  }
 }
 </script>
