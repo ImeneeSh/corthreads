@@ -20,8 +20,19 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(request -> {
-                    var corsConfig = new CorsConfiguration();
-                    corsConfig.setAllowedOrigins(List.of("*"));
+                    CorsConfiguration corsConfig = new CorsConfiguration();
+
+                    String origin = request.getHeader("Origin");
+
+                    if("http://localhost:5173".equals(origin)){
+                        // pour la configuration frontend
+                        corsConfig.setAllowedOrigins(List.of("http://localhost:5173"));
+                        corsConfig.setAllowCredentials(true);
+                    }else {
+                        corsConfig.setAllowedOrigins(List.of("*"));
+                        corsConfig.setAllowCredentials(false);
+                    }
+
                     corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfig.setAllowedHeaders(List.of("*"));
                     return corsConfig;
