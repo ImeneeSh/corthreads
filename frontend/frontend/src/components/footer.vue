@@ -11,7 +11,7 @@
         <div class="links">
           <router-link to="/questions">Questions Fréquement Posées</router-link>
           <span>|</span>
-          <a href="#">A propos</a>
+          <router-link to="/a_propos">A propos</router-link>
           <span>|</span>
           <a href="#">Nous contacter</a>
         </div>
