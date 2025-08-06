@@ -18,7 +18,11 @@
 
           <a href="#" class="oubli">Mot de passe oublié ?</a>
 
-          <button class="connexion-btn">Connexion</button>
+          <button class="connexion-btn" type="submit" v-if="!chargement">Connexion</button>
+
+          <div v-else class="chargement-container">
+            <div class="spinner"></div>
+          </div>
 
           <div class="separateur">
             <span>ou</span>
@@ -145,6 +149,28 @@ input {
   background-color: #103056;
 }
 
+.chargement-container {
+  display: flex ;
+  justify-content: center ;
+  align-items: center;
+  height: 48px ;
+}
+
+.spinner {
+  width: 30px ;
+  height: 30px ;
+  border: 3px solid #FA6E89;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .separateur {
   text-align: center;
   margin-bottom: 16px;
@@ -242,6 +268,8 @@ const motDePasse= ref ('');
 
 const router = useRouter();
 
+const chargement= ref(false);
+
 onMounted(() => {
   document.body.classList.add('no-scroll');
 });
@@ -263,6 +291,7 @@ function connexionGgl() {
 }
 
 async function connexion(){
+  chargement.value = true ;
   try {
     const reponse = await axios.post("http://localhost:8080/api/auth/connexion", {
       idUser: email.value ,
@@ -274,10 +303,12 @@ async function connexion(){
     sessionStorage.setItem('nom', nom) ;
     sessionStorage.setItem('prenom', prenom);
 
-    router.push('/');
+    await router.push('/');
 
   } catch(error){
     console.error("Erreur de connexion , vérifier vos identifiants !:", error);
+  }finally {
+    chargement.value = false ;
   }
 }
 </script>
