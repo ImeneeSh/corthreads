@@ -26,7 +26,8 @@ public class AuthService {
         return new AuthReponse(
                 utilisateur.getIdUser(),
                 utilisateur.getNom(),
-                utilisateur.getPrenom()
+                utilisateur.getPrenom(),
+                utilisateur.getRole()
         );
     }
 }
