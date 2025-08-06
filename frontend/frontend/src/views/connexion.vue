@@ -309,10 +309,11 @@ async function connexion(){
       mdp: motDePasse.value,
     });
 
-    const { nom, prenom } = reponse.data ;
+    const { nom, prenom, role } = reponse.data ;
 
     sessionStorage.setItem('nom', nom) ;
     sessionStorage.setItem('prenom', prenom);
+    sessionStorage.setItem('role' , role);
 
     errConnexion.value= '';
     await router.push('/');

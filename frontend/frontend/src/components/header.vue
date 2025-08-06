@@ -35,7 +35,24 @@
         </div>
       </div>
 
-      <router-link to="/connexion" class="seConnecter-button">Se Connecter</router-link>
+      <div class="section-user" v-if="estConnecter">
+        <button class="user-icon-btn" @click="gererMenuUtil">
+          <img src="@/assets/utilisateur.png" alt="utilisateur" />
+        </button>
+
+        <div v-if="menuUtil" class="user-dropdown">
+          <div class="user-option" @click="router.push('/')"> <!-- après push dans la page des paramètres -->
+            <img src="@/assets/parametres-cog.png" alt="Paramètres" />
+            <span class="parametres-text">Paramètres</span>
+          </div>
+
+          <div class="user-option" @click="deconnexion">
+            <img src="@/assets/deconnexion.png" alt="Déconnexion" />
+            <span class="deconnexion-text">Déconnexion</span>
+          </div>
+        </div>
+      </div>
+      <router-link v-if="!estConnecter" to="/connexion" class="seConnecter-button">Se Connecter</router-link>
     </div>
   </header>
 
@@ -46,17 +63,26 @@
     <img src="@/assets/logo-removebg-preview.png" alt="Logo" class="logo"/>
 
     <div class="menu-button mobile-only">
-      <router-link to="/connexion" class="seConnecter-button menu-version">Se Connecter</router-link>
+      <router-link v-if="!estConnecter" to="/connexion" class="seConnecter-button menu-version">Se Connecter</router-link>
     </div>
-    <ul class="menu-links">
-      <li><a href="#" :class="{ active : pageActive === 'Accueil'}" @click="changerPage('Accueil')">Accueil</a></li>
-      <li class="mobile-only"><a href="#" :class="{ active : pageActive === 'Témoignages'}" @click="changerPage('Témoignages')">Témoignages</a></li>
-      <li class="mobile-only"><a href="#" :class="{ active : pageActive === 'Appels à dons'}" @click="changerPage('Appels à dons')">Appels à dons</a></li>
-
-      <li><a href="#" :class="{ active : pageActive === 'Faire un don'}" @click="changerPage('Faire un don')">Faire un don</a></li>
-      <li><a href="#" :class="{ active : pageActive === 'Partager un témoignage'}" @click="changerPage('Partager un témoignage')">Partager un témoignage</a></li>
-      <li><a href="#" :class="{ active : pageActive === 'Faire un appel à dons'}" @click="changerPage('Faire un appel à dons')">Faire un appel à dons</a></li>
+    <ul class="menu-links" v-if="!estConnecter || role === 'Citoyen'">
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/' }">Accueil</router-link></li>
+      <li class="mobile-only"><router-link to="/" class="menu-link" :class="{ active: route.path === '/temoignages' }">Témoignages</router-link></li>
+      <li class="mobile-only"><router-link to="/" class="menu-link" :class="{ active: route.path === '/appels-a-dons' }">Appels à dons</router-link></li>
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/faire-un-don' }">Faire un don</router-link></li>
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/partager-temoignage' }">Partager un témoignage</router-link></li>
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/appel-a-dons' }">Faire un appel à dons</router-link></li>
     </ul>
+
+
+    <ul class="menu-links" v-if="role === 'Medecin'">
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/' }">Accueil</router-link></li>
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/candidats-au-don' }">Liste des candidats au don</router-link></li>
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/donneurs-potentiels' }">Listes des donneurs potentiels</router-link></li>
+      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/donneurs-valides' }">Listes des donneurs validés</router-link></li>
+    </ul>
+
+
   </div>
 </template>
 
@@ -203,7 +229,7 @@
     gap: 16px;
   }
 
-  .menu-links a {
+  .menu-link{
     text-decoration: none;
     font-weight: 600;
     color: #103056;
@@ -214,7 +240,7 @@
     transition: all 0.2s ease;
   }
 
-  .menu-links a:hover {
+  .menu-link:hover {
     background-color: #FA6E89;
     color: white ;
   }
@@ -223,6 +249,7 @@
     background-color: #FA6E89;
     color : white;
     font-weight: bold;
+    border-radius: 8px;
   }
 
   .mobile-only {
@@ -291,6 +318,72 @@
     z-index: 50;
   }
 
+  .section-user {
+    position: relative;
+  }
+
+  .user-icon-btn {
+    background : none;
+    border: none ;
+    cursor: pointer;
+  }
+
+  .user-icon-btn img {
+    width: 30px ;
+    height: 30px ;
+  }
+
+  .user-dropdown {
+    display: flex ;
+    flex-direction: column;
+    gap: 10px ;
+    align-items: center;
+    padding: 12px ;
+    border-radius: 12px ;
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    position: absolute;
+    top: 40px ;
+    right :0 ;
+    width: 190px;
+    z-index: 50;
+  }
+
+  .user-option {
+    display: flex;
+    width: 100% ;
+    align-items: center;
+    justify-content: center;
+    gap: 10px ;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 8px ;
+  }
+
+  .user-option:hover {
+    background-color: #FA6E89;
+    color: white;
+    border-radius: 12px ;
+  }
+
+  .user-option:hover span {
+    color: white;
+  }
+
+  .user-option img {
+    width: 20px ;
+    height: 20px ;
+  }
+
+  .parametres-text {
+    color: #103056;
+  }
+
+  .deconnexion-text {
+    color: #FF4242 ;
+  }
+
   @media (max-width: 768px){
 
     .mobile-only {
@@ -312,16 +405,28 @@
       margin-top: 16px;
       display: block !important;
     }
+
+    .user-icon-btn img {
+      width: 25px ;
+      height: 25px ;
+    }
   }
 </style>
 <script setup>
 
 import {onBeforeMount, onMounted, ref} from 'vue' ;
+import { useRouter , useRoute } from 'vue-router'
 
 const menuActive = ref(false);
-const pageActive = ref('Accueil');
 const langVisible = ref(false);
 const selectedLang = ref('fr');
+
+const estConnecter= ref(false);
+const role = ref('');
+const menuUtil = ref(false);
+const router = useRouter()
+
+const route = useRoute() //pour détécter la route actuel
 
 function gererMenu(){
   menuActive.value = !menuActive.value ;
@@ -331,10 +436,6 @@ function fermerMenu() {
   menuActive.value = false ;
 }
 
-function changerPage(newPage) {
-  pageActive.value = newPage ;
-  fermerMenu();
-}
 
 function gerermenulang(){
   langVisible.value = ! langVisible.value ;
@@ -342,14 +443,25 @@ function gerermenulang(){
 
 function gererClick(e) {
   const langMenu = document.querySelector('.lang-select');
+  const userMenu = document.querySelector('.section-user');
 
   if(langMenu && !langMenu.contains(e.target)) {
     langVisible.value = false;
+  }
+
+  if(userMenu && !userMenu.contains(e.target)) {
+    menuUtil.value = false ;
   }
 }
 
 onMounted(() => {
   window.addEventListener('click',gererClick);
+  const storedRole = sessionStorage.getItem('role')
+
+  if(storedRole){
+    estConnecter.value= true
+    role.value = storedRole
+  }
 });
 
 onBeforeMount(() => {
@@ -359,5 +471,15 @@ onBeforeMount(() => {
 function changerLangue(langue) {
   selectedLang.value = langue;
   langVisible.value = false;
+}
+
+function deconnexion(){
+  sessionStorage.clear()
+  estConnecter.value = false ;
+  router.push('/')
+}
+
+function gererMenuUtil(){
+  menuUtil.value= !menuUtil.value ;
 }
 </script>
