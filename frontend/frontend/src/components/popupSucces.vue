@@ -61,6 +61,34 @@
   max-width: 280px;
   margin-top: 10px ;
 }
+
+@media (max-width: 768px){
+  .popup-content {
+    padding: 24px ;
+    border-radius: 12px;
+    max-height: 90vh; /* pour éviter que ça déborde sur les petits écrans */
+    overflow-y: auto;
+  }
+
+  .popup-content h2 {
+    font-size: 18px ;
+  }
+
+  .bienvenue {
+    font-size: 16px ;
+  }
+
+  .popup-illustration {
+    max-width: 220px;
+  }
+
+  .close-icon {
+    width: 20px ;
+    height: 20px ;
+    top: 12px ;
+    right: 12px ;
+  }
+}
 </style>
 <script setup>
 import { defineProps } from 'vue'
