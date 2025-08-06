@@ -18,6 +18,8 @@
 
           <a href="#" class="oubli">Mot de passe oublié ?</a>
 
+          <p v-if="errConnexion" class="message-erreur">{{ errConnexion }}</p>
+
           <button class="connexion-btn" type="submit" v-if="!chargement">Connexion</button>
 
           <div v-else class="chargement-container">
@@ -130,6 +132,14 @@ input {
   display: inline-block;
   margin-bottom: 20px;
   font-weight: 600;
+}
+
+.message-erreur {
+  color: #FA6E89;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 .connexion-btn {
@@ -269,6 +279,7 @@ const motDePasse= ref ('');
 const router = useRouter();
 
 const chargement= ref(false);
+const errConnexion= ref('');
 
 onMounted(() => {
   document.body.classList.add('no-scroll');
@@ -303,10 +314,17 @@ async function connexion(){
     sessionStorage.setItem('nom', nom) ;
     sessionStorage.setItem('prenom', prenom);
 
+    errConnexion.value= '';
     await router.push('/');
 
   } catch(error){
     console.error("Erreur de connexion , vérifier vos identifiants !:", error);
+
+    if(error.response && error.response.status === 401 ){
+      errConnexion.value = "Identifiants incorrects. Veuillez réessayer.";
+    } else {
+      errConnexion.value = "Une erreur est survenue. Veuillez réessayer plus tard.";
+    }
   }finally {
     chargement.value = false ;
   }
