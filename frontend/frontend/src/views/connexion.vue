@@ -231,12 +231,16 @@ import axios from "axios" ;
 import voir from "@/assets/oeil (1).png";
 import cacher from "@/assets/cacher (1).png" ;
 
+import { useRouter } from 'vue-router' ;
+
 import { signInWithPopup , auth ,provider } from "@/firebase.js";
 
 const motDePasseVisible = ref(false);
 
-const email=('');
+const email= ref('');
 const motDePasse= ref ('');
+
+const router = useRouter();
 
 onMounted(() => {
   document.body.classList.add('no-scroll');
@@ -265,7 +269,13 @@ async function connexion(){
       mdp: motDePasse.value,
     });
 
-    console.log("Connexion réussie :", reponse.data);
+    const { nom, prenom } = reponse.data ;
+
+    sessionStorage.setItem('nom', nom) ;
+    sessionStorage.setItem('prenom', prenom);
+
+    router.push('/');
+
   } catch(error){
     console.error("Erreur de connexion , vérifier vos identifiants !:", error);
   }

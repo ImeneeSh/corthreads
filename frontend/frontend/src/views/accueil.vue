@@ -1,6 +1,17 @@
 <template>
   <div class="accueil-container">
 
+    <!-- popup de bienvenu -->
+
+    <div v-if="showPopup" class="popup-overlay">
+      <div class="popup-content" data-aos="zoom-in">
+      <img src="@/assets/marque-x.png" alt="fermer" class="close-icon" @click="closePopup" />
+      <h2>Votre connexion a été effectuée avec succès !</h2>
+      <p class="bienvenue">Bienvenu {{ prenom }} {{ nom }}</p>
+      <img src="@/assets/celebration.png" alt="célébration" class="popup-illustration"/>
+      </div>
+    </div>
+
     <!-- section hero -->
     <section class="hero">
       <img src="@/assets/pexels-artempodrez-6823667%20-%20Copie.jpg" alt="Ruban du don" class="hero-bg" />
@@ -211,6 +222,59 @@ cite {
   margin-bottom: 24px;
 }
 
+/* section popup */
+.popup-overlay {
+  position : fixed ;
+  top: 0 ;
+  left : 0 ;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999 ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background-color: white ;
+  padding : 32px ;
+  border-radius: 16px ;
+  width: 90% ;
+  max-width: 600px ;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.close-icon {
+  position: absolute;
+  top: 16px ;
+  right: 16px ;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.popup-content h2 {
+  color: #FA6E89;
+  font-size: 20px ;
+  margin-bottom: 8px;
+}
+
+.bienvenue {
+  font-size: 18px ;
+  font-weight: bold;
+  color: #103056;
+  margin-bottom: 16px;
+}
+
+.popup-illustration {
+  width: 100%;
+  max-width: 280px;
+  margin-top: 10px ;
+}
+
 @media (max-width: 768px){
 
   .accueil-container {
@@ -316,7 +380,11 @@ cite {
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-import { onMounted } from 'vue'
+import { ref , onMounted } from 'vue'
+
+const nom = ref('');
+const prenom = ref('');
+const showPopup = ref(false);
 
 onMounted(() => {
   AOS.init({
@@ -324,6 +392,21 @@ onMounted(() => {
     once: false,
     offset: 120,
   })
-})
+});
+
+const nomStorage = sessionStorage.getItem('nom');
+const prenomStorage = sessionStorage.getItem('prenom');
+
+if (nomStorage && prenomStorage) {
+  nom.value = nomStorage ;
+  prenom.value = prenomStorage ;
+  showPopup.value = true;
+}
+
+function closePopup(){
+  showPopup.value = false;
+  sessionStorage.removeItem('nom');
+  sessionStorage.removeItem('prenom');
+}
 </script>
 
