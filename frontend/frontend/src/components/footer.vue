@@ -28,7 +28,7 @@
 
     <div class="bas-footer">
       <p>Réalisé avec ♡ par Nour El Imene Sahi</p>
-      <p>© 2025 Corthreads - Tous droits réservés</p>
+      <p>© 2025 Corthreads – Tous droits réservés sur le contenu. Code source sous licence MIT.</p>
     </div>
   </footer>
 </template>
