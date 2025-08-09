@@ -35,7 +35,7 @@
             Continuer avec Google
           </button>
 
-          <p class="inscription">Vous n'avez pas de compte ? <a href="#">S'inscrire</a></p>
+          <p class="inscription">Vous n'avez pas de compte ? <router-link to="/inscription">S'inscrire</router-link></p>
 
         </form>
       </div>
