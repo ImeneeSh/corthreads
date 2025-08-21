@@ -5,6 +5,7 @@ import Questions from '@/views/questions.vue'
 import Apropos from '@/views/a_propos.vue'
 import Contacter from '@/views/contacter.vue'
 import Inscription from '@/views/inscription.vue'
+import AppelDon from '@/views/appelDon.vue'
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
         path: '/inscription',
         name: 'Inscription',
         component: Inscription
+    },
+    {
+      path: '/appelDon',
+      name: 'AppelDon',
+      component: AppelDon
     }
     //les autres ici
 ]

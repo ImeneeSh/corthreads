@@ -45,7 +45,7 @@
         <img src="@/assets/talking.png" alt="illustration appel à dons" />
       </div>
       <button class="cta-button troisieme">
-        Découvrir plus
+        <router-link to="/appelDon" class="link">Découvrir plus</router-link>
         <img src="@/assets/fleche-droite.png" alt="flèche" class="fleche-icon" />
       </button>
     </section>
@@ -114,6 +114,12 @@
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
 }
 
 .cta-button.premier {
@@ -213,6 +219,11 @@ cite {
 .dons-header img{
   max-width: 600px;
   margin-bottom: 24px;
+}
+
+router-link {
+  text-decoration: none;
+
 }
 
 /* section popup */

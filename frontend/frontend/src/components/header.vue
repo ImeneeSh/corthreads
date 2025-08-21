@@ -10,7 +10,7 @@
 
     <nav class="nav-links">
       <router-link to="/" class="nav-item">Accueil</router-link>
-      <a href="#">Témoignages</a>
+      <router-link to="/appelDon">Témoignages</router-link>
       <a href="#">Appels à dons</a>
     </nav>
 
