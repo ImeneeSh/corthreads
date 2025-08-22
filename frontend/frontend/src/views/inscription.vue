@@ -13,7 +13,6 @@
           <component :is="etapes[etapeActuelle]" />
         </form>
 
-        <button v-if="etapeActuelle" class="retour-btn" @click="etapeActuelle--">← Retour</button>
       </div>
     </div>
   </div>
@@ -113,6 +112,7 @@ input {
 <script setup>
 import {ref, reactive, provide } from "vue";
 import EtapeRole from './etapeRole.vue' ;
+import EtapeMail from './etapeMail.vue' ;
 
 const etapeActuelle = ref(0);
 
@@ -133,6 +133,7 @@ provide("formData", formData);
 
 const etapes = [
   EtapeRole,
+  EtapeMail,
 ];
 
 function suivant() {
