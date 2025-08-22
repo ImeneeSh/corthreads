@@ -5,7 +5,7 @@
       <div class="select-wrapper">
         <select v-model="selectedTypeDon">
           <option value="">Type de don</option>
-          <option v-for="(don, i) in dons" :key="i" :value="dons">{{ don }} </option>
+          <option v-for="(don, i) in dons" :key="i" :value="don">{{ don }}</option>
         </select>
         <img src="@/assets/fleche-vers-le-bas-pour-naviguer.png" class="select-icon" alt="icone déroulante" />
       </div>
@@ -23,7 +23,7 @@
         </select>
         <img src="@/assets/fleche-vers-le-bas-pour-naviguer.png" class="select-icon" alt="icone déroulante" />
       </div>
-      <button class="btn-appliquer">Appliquer</button>
+      <button class="btn-appliquer" @click="appliquerFiltres">Appliquer</button>
     </div>
 
     <div v-if="loading" class="loader-container">
@@ -407,6 +407,32 @@ function urgenceClass(niveau : string) {
   return {
     urgent: niveau.toLowerCase() === 'urgent',
     normal: niveau.toLowerCase() === 'normal'
+  }
+}
+
+async function appliquerFiltres() {
+  loading.value = true
+  error.value = null
+
+  let url= 'http://localhost:8080/api/posts/recherche?typePost=Appel_don'
+
+  if (selectedWilaya.value) {
+    url += `&wilaya=${encodeURIComponent(selectedWilaya.value)}`
+  } if (selectedUrgence.value) {
+    url += `&urgence=${encodeURIComponent(selectedUrgence.value)}`
+  } if (selectedTypeDon.value) {
+    url += `&typeDon=${encodeURIComponent(selectedTypeDon.value)}`
+  }
+
+  try {
+    const reponse = await axios.get(url)
+    posts.value = reponse.data
+    visiblePosts.value = 4
+  } catch(err){
+    console.error('Erreur lors de l’application des filtres', err)
+    error.value = "Impossible de charger les résultats filtrés."
+  } finally {
+    loading.value = false
   }
 }
 </script>
