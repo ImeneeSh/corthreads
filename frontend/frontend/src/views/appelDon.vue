@@ -193,6 +193,7 @@
   font-size: 16px ;
   font-weight: bold;
   text-align: left ;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .icon-user {
