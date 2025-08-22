@@ -41,6 +41,7 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private Urgence urgence ;
 
+    @Lob
     private String contenu ;
 
     @Column(nullable = false)
