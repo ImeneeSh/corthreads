@@ -3,6 +3,13 @@
     <div class="filtres">
       <label>Filtrer par :</label>
       <div class="select-wrapper">
+        <select v-model="selectedTypeDon">
+          <option value="">Type de don</option>
+          <option v-for="(don, i) in dons" :key="i" :value="dons">{{ don }} </option>
+        </select>
+        <img src="@/assets/fleche-vers-le-bas-pour-naviguer.png" class="select-icon" alt="icone déroulante" />
+      </div>
+      <div class="select-wrapper">
         <select v-model="selectedWilaya">
           <option value="">Wilaya</option>
           <option v-for="(wilaya, i) in wilayas" :key="i" :value="wilaya">{{ wilaya }} </option>
@@ -364,8 +371,11 @@ const visiblePosts = ref(4)
 const loading = ref(true)
 const error = ref(null)
 
+const selectedTypeDon = ref('')
 const selectedWilaya = ref('')
 const selectedUrgence = ref('')
+
+const dons = ["Sang", "Organe", "Foie"]
 
 const wilayas = [
   "Adrar", "Alger", "Annaba", "Aïn Defla", "Aïn Témouchent", "Batna", "Béchar", "Béjaïa", "Béni Abbès", "Biskra", "Blida", "Bordj Bou Arreridj", "Bordj Badji Mokhtar", "Bouira", "Boumerdès", "Chlef", "Constantine", "Djelfa", "Djanet", "Djijel", "El Bayadh", "El M'Ghair", "El Meniaa", "El Oued", "El Tarf", "Ghardaïa", "Guelma", "Illizi", "In Salah", "In Guezzam", "Khenchela", "Laghouat", "Mascara", "Médéa", "Mila", "Mostaganem", "M'Sila", "Naâma", "Oum El Bouaghi", "Oran", "Ouargla", "Ouled Djellal", "Relizane", "Saïda", "Sétif", "Sidi Bel Abbès", "Skikda", "Souk Ahras", "Tamanrasset", "Tébessa", "Tiaret", "Timimoun", "Tindouf", "Tissemsilt", "Tizi Ouzou", "Tipaza", "Tlemcen", "Touggourt"
