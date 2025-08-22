@@ -17,6 +17,10 @@
       <button class="btn-appliquer">Appliquer</button>
     </div>
 
+    <div v-if="loading" class="loader-container">
+      <div class="loader"></div>
+    </div>
+
     <div class="carte-appel">
       <div class="carte" v-for="(post, index) in postsAffiches" :key="index" data-aos="fade-up">
         <div class="carte-header">
@@ -35,8 +39,8 @@
         <p class="plus">Plus de détails :</p>
         <div class="infos">
           <p><strong>Type de don :</strong> {{ post.typeDon }}</p>
-          <p><strong>Groupe sanguin :</strong> {{ post.groupSang }}</p>
-          <p><strong>Rhesus :</strong> {{ post.rh }}</p>
+          <p v-if="post.typeDon.toLowerCase() !== 'organe'"><strong>Groupe sanguin :</strong> {{ post.groupSang }}</p>
+          <p v-if="post.typeDon.toLowerCase() !== 'organe'"><strong>Rhesus :</strong> {{ post.rh }}</p>
           <p><strong>Wilaya :</strong> {{ post.wilaya }}</p>
           <p><strong>Date :</strong> {{ post.datePublication }}</p>
         </div>
@@ -120,6 +124,27 @@
 
 .plus {
   font-weight: bold ;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0 ;
+}
+
+.loader {
+  border: 6px solid #F3F3F3 ;
+  border-top: 6px solid #FA6E89;
+  border-radius: 50% ;
+  width: 40px ;
+  height: 40px ;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .carte-appel {
