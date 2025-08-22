@@ -3,14 +3,16 @@
     <div class="filtres">
       <label>Filtrer par :</label>
       <div class="select-wrapper">
-        <select>
+        <select v-model="selectedWilaya">
           <option value="">Wilaya</option>
+          <option v-for="(wilaya, i) in wilayas" :key="i" :value="wilaya">{{ wilaya }} </option>
         </select>
         <img src="@/assets/fleche-vers-le-bas-pour-naviguer.png" class="select-icon" alt="icone déroulante" />
       </div>
       <div class="select-wrapper">
-        <select>
+        <select v-model="selectedUrgence">
           <option value="">Urgence</option>
+          <option v-for="(urgence, i) in niveauxUrgence" :key="i" :value="urgence">{{ urgence }}</option>
         </select>
         <img src="@/assets/fleche-vers-le-bas-pour-naviguer.png" class="select-icon" alt="icone déroulante" />
       </div>
@@ -361,6 +363,15 @@ const visiblePosts = ref(4)
 
 const loading = ref(true)
 const error = ref(null)
+
+const selectedWilaya = ref('')
+const selectedUrgence = ref('')
+
+const wilayas = [
+  "Adrar", "Alger", "Annaba", "Aïn Defla", "Aïn Témouchent", "Batna", "Béchar", "Béjaïa", "Béni Abbès", "Biskra", "Blida", "Bordj Bou Arreridj", "Bordj Badji Mokhtar", "Bouira", "Boumerdès", "Chlef", "Constantine", "Djelfa", "Djanet", "Djijel", "El Bayadh", "El M'Ghair", "El Meniaa", "El Oued", "El Tarf", "Ghardaïa", "Guelma", "Illizi", "In Salah", "In Guezzam", "Khenchela", "Laghouat", "Mascara", "Médéa", "Mila", "Mostaganem", "M'Sila", "Naâma", "Oum El Bouaghi", "Oran", "Ouargla", "Ouled Djellal", "Relizane", "Saïda", "Sétif", "Sidi Bel Abbès", "Skikda", "Souk Ahras", "Tamanrasset", "Tébessa", "Tiaret", "Timimoun", "Tindouf", "Tissemsilt", "Tizi Ouzou", "Tipaza", "Tlemcen", "Touggourt"
+]
+
+const niveauxUrgence = ["Normal", "Urgent"]
 
 onMounted( async () => {
   try {
