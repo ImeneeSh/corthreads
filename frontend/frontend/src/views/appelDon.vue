@@ -18,63 +18,37 @@
     </div>
 
     <div class="carte-appel">
-      <div class="carte" data-aos="fade-up">
+      <div class="carte" v-for="(post, index) in postsAffiches" :key="index" data-aos="fade-up">
         <div class="carte-header">
           <img src="@/assets/utilisateur.png" alt="user icon" class="icon-user" />
           <div class="header-info">
-            <h3>Ahmed Ben Ali</h3>
+            <h3>{{ post.utilisateur.prenom }} {{ post.utilisateur.nom }}</h3>
           </div>
-          <p class="urgence" :class="urgenceClass('Urgent')">
-            Niveau d'urgence : <span>{{ 'Urgent' }}</span>
+
+          <p class="urgence" :class="urgenceClass(post.urgence)">
+            Niveau d'urgence : <span>{{ post.urgence }}</span>
           </p>
         </div>
-        <p class="message">
-          Aidez-nous à sauver une vie : nous sommes dans le besoin immédiat de sang O- pour une intervention chirurgicale
-        </p>
-        <p class="plus">Plus de details :</p>
+
+        <p class="message">{{ post.contenu }}</p>
+
+        <p class="plus">Plus de détails :</p>
         <div class="infos">
-          <p><strong>Type de don :</strong> Sanguin</p>
-          <p><strong>Groupe sanguin :</strong> O</p>
-          <p><strong>Rhesus :</strong> négatif</p>
-          <p><strong>Wilaya :</strong> Batna</p>
-          <p><strong>Date :</strong> 25-06-2025</p>
+          <p><strong>Type de don :</strong> {{ post.typeDon }}</p>
+          <p><strong>Groupe sanguin :</strong> {{ post.groupSang }}</p>
+          <p><strong>Rhesus :</strong> {{ post.rh }}</p>
+          <p><strong>Wilaya :</strong> {{ post.wilaya }}</p>
+          <p><strong>Date :</strong> {{ post.datePublication }}</p>
         </div>
+
         <button class="btn-don">
           <img src="@/assets/faire-un-don.png" class="icon-don" alt="don icon">
           Faire un don
         </button>
       </div>
-
-      <div class="carte" data-aos="fade-up">
-        <div class="carte-header">
-          <img src="@/assets/utilisateur.png" alt="user icon" class="icon-user" />
-          <div class="header-info">
-            <h3>Ahmed Ben Ali</h3>
-          </div>
-          <p class="urgence" :class="urgenceClass('Normal')">
-            Niveau d'urgence : <span>{{ 'Normal' }}</span>
-          </p>
-        </div>
-        <p class="message">
-          Aidez-nous à sauver une vie : nous sommes dans le besoin immédiat de sang O- pour une intervention chirurgicale
-        </p>
-        <div class="infos">
-          <p><strong>Type de don :</strong> Sanguin</p>
-          <p><strong>Groupe sanguin :</strong> O</p>
-          <p><strong>Rhesus :</strong> négatif</p>
-          <p><strong>Wilaya :</strong> Batna</p>
-          <p><strong>Date :</strong> 25-06-2025</p>
-        </div>
-        <button class="btn-don">
-          <img src="@/assets/faire-un-don.png" class="icon-don" alt="don icon">
-          Faire un don
-        </button>
-      </div>
-
-
     </div>
 
-    <button class="voir-plus">
+    <button class="voir-plus" @click="voirPlus" v-if="visiblePosts <= posts.length">
       Voir plus
     <img src="@/assets/fleche-droite.png" class="icon-fleche" alt="flèche" >
     </button>
@@ -353,6 +327,35 @@
 }
 </style>
 <script setup lang="ts">
+
+import { ref, onMounted, computed } from 'vue'
+import axios from 'axios'
+
+const posts = ref([])
+const visiblePosts = ref(4)
+
+const loading = ref(true)
+const error = ref(null)
+
+onMounted( async () => {
+  try {
+    const reponse = await axios.get('http://localhost:8080/api/posts/recherche?typePost=Appel_don')
+    posts.value = reponse.data
+  }catch (err) {
+    console.error('Erreur lors de la récupération des données',err)
+    error.value = "impossible de charger les appels à dons."
+  }finally {
+    loading.value = false
+  }
+})
+
+const postsAffiches = computed(() => {
+  return posts.value.slice(0, visiblePosts.value)
+})
+
+function voirPlus() {
+  visiblePosts.value += 4
+}
 
 function urgenceClass(niveau : string) {
   return {
