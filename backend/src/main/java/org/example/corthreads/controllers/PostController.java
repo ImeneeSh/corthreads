@@ -29,9 +29,9 @@ public class PostController {
             @RequestParam(required = false) TypeDon typeDon,
             @RequestParam(required = false) GroupeSang groupSang,
             @RequestParam(required = false) Urgence urgence,
-            @RequestParam(required = false) String Wilaya,
+            @RequestParam(required = false) String wilaya,
             @RequestParam(required = false) LocalDate datePublication) {
 
-        return postService.rechercherPost(utilisateurCritere,typePost,typeDon,groupSang,urgence,Wilaya,datePublication);
+        return postService.rechercherPost(utilisateurCritere,typePost,typeDon,groupSang,urgence,wilaya,datePublication);
     }
 }
