@@ -6,6 +6,7 @@ import Apropos from '@/views/a_propos.vue'
 import Contacter from '@/views/contacter.vue'
 import Inscription from '@/views/inscription.vue'
 import AppelDon from '@/views/appelDon.vue'
+import Temoignage from '@/views/temoignages.vue'
 
 const routes = [
     {
@@ -42,13 +43,22 @@ const routes = [
       path: '/appelDon',
       name: 'AppelDon',
       component: AppelDon
+    },
+    {
+        path: '/temoignage',
+        name: 'Temoignage',
+        component: Temoignage
     }
-    //les autres ici
+
 ]
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    routes
+    routes,
+
+    scrollBehavior(to, from, savedPosition){
+        return { top: 0}
+    }
 })
 
 export default router

@@ -11,7 +11,7 @@
     <nav class="nav-links">
       <router-link to="/" class="nav-item">Accueil</router-link>
       <router-link to="/appelDon">Appels à dons</router-link>
-      <a href="#">Témoignages</a>
+      <router-link to="/temoignage">Témoignages</router-link>
     </nav>
 
     <div class="section-droite">

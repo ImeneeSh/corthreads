@@ -33,7 +33,7 @@
       </blockquote>
     </div>
     <button class="cta-button deuxieme">
-      Découvrir plus
+      <router-link to="/temoignage" class="link">Découvrir plus</router-link>
       <img src="@/assets/fleche-droite.png" alt="flèche" class="fleche-icon" />
     </button>
   </section>
