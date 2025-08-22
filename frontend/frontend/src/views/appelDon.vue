@@ -71,7 +71,7 @@
 <style scoped>
 
 .appel-container {
-  background-color: #D4DEFF;
+  background-color: #E8EEFF;
   min-height: 100vh ;
   padding: 120px 40px 40px;
 }
