@@ -7,6 +7,7 @@ import Contacter from '@/views/contacter.vue'
 import Inscription from '@/views/inscription.vue'
 import AppelDon from '@/views/appelDon.vue'
 import Temoignage from '@/views/temoignages.vue'
+import partagerTemoignage from '@/views/partagerTemoignage.vue'
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
         path: '/temoignage',
         name: 'Temoignage',
         component: Temoignage
+    },
+    {
+        path: '/partagerTemoignage',
+        name: 'PartagerTemoignage',
+        component: partagerTemoignage
     }
 
 ]
