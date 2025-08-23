@@ -8,15 +8,17 @@
       <div class="body-form">
         <div class="user-info">
           <img src="@/assets/utilisateur.png" alt="user icon" class="icon-user" />
-          <span class="user-name">Ablehamid Kala</span>
+          <span class="user-name">{{ prenom }} {{nom}}</span>
         </div>
-        <textarea class="textarea" placeholder="Dite quelque chose..."></textarea>
+        <textarea class="textarea" placeholder="Dite quelque chose..." v-model="contenu"></textarea>
       </div>
 
       <div class="footer-form">
-        <button class="btn-partager">Partager</button>
+        <button class="btn-partager" @click="envoyerTemoignage">Partager</button>
       </div>
     </div>
+
+    <Popup v-if="afficherPopup" :titre="popupTitre" :message="popupMessage" :illustration="illustrationConnexion" @fermer="fermerPopup"/>
   </div>
 </template>
 
@@ -152,4 +154,75 @@
 
 <script setup>
 
+import {ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import Popup from '@/components/popupSucces.vue'
+import illustrationConnexion from '@/assets/celebration.png'
+
+const router = useRouter()
+
+const afficherPopup = ref(false)
+const popupTitre = ref('')
+const popupMessage = ref('')
+const rediriger = ref(false)
+
+const estConnecte = ref (false)
+const contenu = ref('')
+const nom = ref('')
+const prenom = ref('')
+
+onMounted(() => {
+  const idUser = sessionStorage.getItem('idUser')
+  if(!idUser) {
+    afficherPopup.value = true
+    popupTitre.value= 'Connexion requise'
+    popupMessage.value = 'Vous devez être connecté pour publier un témoignage'
+    rediriger.value = true
+  } else {
+    estConnecte.value = true
+    nom.value = sessionStorage.getItem('nom') || ''
+    prenom.value = sessionStorage.getItem('prenom') || ''
+  }
+})
+
+const envoyerTemoignage = async () => {
+  const idUser = sessionStorage.getItem('idUser')
+
+  if (!idUser || !contenu.value.trim()){
+    return
+  }
+
+  const body = {
+    idUser: idUser,
+    typePost: 'Temoignage',
+    typeDon: 'Sang',
+    groupSang: 'A',
+    rh: 'positif',
+    urgence: 'Normal',
+    contenu: contenu.value,
+    wilaya: 'Tlemcen'
+  }
+
+  try {
+    await axios.post('http://localhost:8080/api/posts/ajout' , body)
+
+    popupTitre.value = 'Témoignage partagé avec succès'
+    popupMessage.value = 'Merci pour votre contribution.'
+    afficherPopup.value = true
+    rediriger.value = true
+    contenu.value = ''
+  } catch (error) {
+    console.error(error)
+    alert("Erreur lors de l'envoi du témoignage.")
+  }
+}
+
+const fermerPopup = () => {
+  afficherPopup.value = false
+
+  if(rediriger.value) {
+    router.push('/')
+  }
+}
 </script>

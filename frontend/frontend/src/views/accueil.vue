@@ -362,8 +362,6 @@ onMounted(() => {
 
 function closePopup(){
   showPopup.value = false;
-  sessionStorage.removeItem('nom');
-  sessionStorage.removeItem('prenom');
 }
 </script>
 
