@@ -309,8 +309,9 @@ async function connexion(){
       mdp: motDePasse.value,
     });
 
-    const { nom, prenom, role } = reponse.data ;
+    const { idUser ,nom, prenom, role } = reponse.data ;
 
+    sessionStorage.setItem('idUser' , idUser);
     sessionStorage.setItem('nom', nom) ;
     sessionStorage.setItem('prenom', prenom);
     sessionStorage.setItem('role' , role);
