@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <Popup v-if="afficherPopup" :titre="popupTitre" :message="popupMessage" :illustration="illustrationConnexion" @fermer="fermerPopup" />
+    <Popup v-if="afficherPopup" :titre="popupTitre" :message="popupMessage" :illustration="illustrationPopup" @fermer="fermerPopup" />
   </div>
 </template>
 
@@ -261,6 +261,9 @@ import { useRouter} from 'vue-router'
 import axios from 'axios'
 import Popup from '@/components/popupSucces.vue'
 import illustrationConnexion from '@/assets/celebration.png'
+import illustrationRequired from '@/assets/required.png'
+
+const illustrationPopup = ref(illustrationRequired)
 
 const router = useRouter()
 
@@ -298,6 +301,7 @@ onMounted(() => {
     afficherPopup.value = true
     popupTitre.value = 'Connexion requise'
     popupMessage.value = 'Vous devez être connecté pour publier un appel à dons'
+    illustrationPopup.value = illustrationRequired
     rediriger.value = true
   } else {
     estConnecte.value = true
@@ -329,6 +333,7 @@ const envoyerAppel = async () => {
 
     popupTitre.value = 'Appel partagé avec succès'
     popupMessage.value = 'Merci pour votre confiance.'
+    illustrationPopup.value = illustrationConnexion
     afficherPopup.value = true
     rediriger.value = true
     contenu.value = ''
