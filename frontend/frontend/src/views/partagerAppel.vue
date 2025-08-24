@@ -213,7 +213,7 @@
 
 @media screen and (max-width: 768px){
   .appel-container {
-    padding: 120px 20px 0 20px ;
+    padding: 120px 20px 30px 20px ;
     align-items: flex-start;
   }
 
