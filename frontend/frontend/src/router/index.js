@@ -8,6 +8,7 @@ import Inscription from '@/views/inscription.vue'
 import AppelDon from '@/views/appelDon.vue'
 import Temoignage from '@/views/temoignages.vue'
 import partagerTemoignage from '@/views/partagerTemoignage.vue'
+import partagerAppel from '@/views/partagerAppel.vue'
 
 const routes = [
     {
@@ -54,6 +55,11 @@ const routes = [
         path: '/partagerTemoignage',
         name: 'PartagerTemoignage',
         component: partagerTemoignage
+    },
+    {
+        path: '/partagerAppel',
+        name: 'PartagerAppel',
+        component: partagerAppel
     }
 
 ]
