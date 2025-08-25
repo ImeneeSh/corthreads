@@ -69,7 +69,7 @@
       <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/' }">Accueil</router-link></li>
       <li class="mobile-only"><router-link to="/temoignage" class="menu-link" :class="{ active: route.path === '/temoignages' }">Témoignages</router-link></li>
       <li class="mobile-only"><router-link to="/appelDon" class="menu-link" :class="{ active: route.path === '/appels-a-dons' }">Appels à dons</router-link></li>
-      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/faire-un-don' }">Faire un don</router-link></li>
+      <li><router-link to="/faireDonSang" class="menu-link" :class="{ active: route.path === '/faire-un-don' }">Faire un don</router-link></li>
       <li><router-link to="/partagerAppel" class="menu-link" :class="{ active: route.path === '/appel-a-dons' }">Faire un appel à dons</router-link></li>
       <li><router-link to="/partagerTemoignage" class="menu-link" :class="{ active: route.path === '/partager-temoignage' }">Partager un témoignage</router-link></li>
     </ul>

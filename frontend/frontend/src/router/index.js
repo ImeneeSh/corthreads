@@ -9,6 +9,7 @@ import AppelDon from '@/views/appelDon.vue'
 import Temoignage from '@/views/temoignages.vue'
 import partagerTemoignage from '@/views/partagerTemoignage.vue'
 import partagerAppel from '@/views/partagerAppel.vue'
+import faireDonSang from '@/views/faireUnDonSang.vue'
 
 const routes = [
     {
@@ -60,8 +61,12 @@ const routes = [
         path: '/partagerAppel',
         name: 'PartagerAppel',
         component: partagerAppel
+    },
+    {
+        path: '/faireDonSang',
+        name: 'FaireDonSang',
+        component: faireDonSang
     }
-
 ]
 
 const router = createRouter({
