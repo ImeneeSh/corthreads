@@ -55,6 +55,8 @@
 
       <button class="btn-submit" :disabled="!accepte">M'inscrire</button>
      </div>
+
+    <Popup v-if="afficherPopup" :titre="popupTitre" :message="popupMessage" :illustration="illustrationPopup" @fermer="fermerPopup" />
   </div>
 </template>
 
@@ -303,13 +305,25 @@ h2 {
 </style>
 <script setup>
 
-import { ref, watch } from 'vue' ;
+import {onMounted, ref, watch} from 'vue' ;
 import { useRouter } from 'vue-router' ;
+import Popup from "@/components/popupSucces.vue";
+import illustrationRequired from "@/assets/required.png";
+
 
 const router = useRouter() ;
 const selectedType = ref('sanguin');
 
 const accepte = ref(false) ;
+
+
+const afficherPopup = ref(false)
+const popupTitre = ref('')
+const popupMessage = ref('')
+const rediriger = ref(false)
+
+const estConnecte = ref (false)
+const illustrationPopup = ref(illustrationRequired)
 
 watch(selectedType, (newValue) => {
 
@@ -361,4 +375,25 @@ const antecedents = [
   "Avez-vous déjà eu un cancer ?",
   "Avez-vous reçu une greffe de la cornée ?"
 ];
+
+onMounted(() => {
+  const idUser = sessionStorage.getItem('idUser')
+  if(!idUser) {
+    afficherPopup.value = true
+    popupTitre.value = 'Connexion requise'
+    popupMessage.value = 'Vous devez être connecté pour publier un appel à dons'
+    illustrationPopup.value = illustrationRequired
+    rediriger.value = true
+  } else {
+    estConnecte.value = true
+  }
+})
+
+const fermerPopup = () => {
+  afficherPopup.value = false
+
+  if(rediriger.value) {
+    router.push('/')
+  }
+}
 </script>
