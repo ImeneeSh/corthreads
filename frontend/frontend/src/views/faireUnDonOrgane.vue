@@ -10,51 +10,22 @@
     </div>
 
     <div class="carte">
+      <h2>Important à savoir</h2>
 
-      <h2>Veuillez répondre au questionnaire suivant pour s'assurer de votre admisibilité</h2>
-
-      <div class="section">
-        <h3>Santé générale</h3>
-        <div v-for="(question, index) in sante" :key="'sante-' + index" class="question">
-          <label>{{ question }}</label>
-          <div class="reponses">
-            <label><input type="radio" :name="'sante-' + index" /> Oui</label>
-            <label><input type="radio" :name="'sante-' + index" /> Non</label>
-          </div>
-        </div>
-     </div>
-
-      <div class="section">
-        <h3>Comportements à risque</h3>
-        <div v-for="(question, index) in risque" :key="'risque-' + index" class="question">
-          <label>{{ question }}</label>
-          <div class="reponses">
-            <label><input type="radio" :name="'risque-' + index" /> Oui</label>
-            <label><input type="radio" :name="'risque-' + index" /> Non</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h3>Antécédents médicaux</h3>
-        <div v-for="(question, index) in antecedents" :key="'ant-' + index" class="question">
-          <label>{{ question }}</label>
-          <div class="reponses">
-            <label><input type="radio" :name="'ant-' + index" /> Oui</label>
-            <label><input type="radio" :name="'ant-' + index" /> Non</label>
-          </div>
-        </div>
-      </div>
+      <p>En choisissant de faire un don d’organes, vous ne donnez pas immédiatement vos organes.
+        Votre inscription signifie simplement que vous vous portez volontaire, de votre vivant, pour faire
+        un don après votre décès si les conditions médicales le permettent. Votre volonté sera inscrite
+        dans le registre national des donneurs, consulté uniquement en cas de décès.</p>
 
       <div class="confirmation">
         <label>
-          <input type="checkbox" v-model="accepte"/>
-          Je déclare avoir rempli ce formulaire en toute honnêteté et certifie que toutes les réponses sont vraies.
+          <input type="checkbox" v-model="accepte" />
+          Je déclare avoir lu attentivement toutes les informations fournies et certifie les avoir comprises en toute honnêteté.
         </label>
-     </div>
+      </div>
 
       <button class="btn-submit" :disabled="!accepte">M'inscrire</button>
-     </div>
+    </div>
   </div>
 </template>
 
@@ -175,32 +146,11 @@ h2 {
   color: #103056;
 }
 
-.section{
-  margin-bottom: 30px ;
-  background-color: #EBE3FF ;
-  padding: 25px ;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+p {
+  font-weight: 500 ;
+  text-align: left;
 }
 
-.section h3 {
-  color: #FA6E89;
-  margin-bottom: 30px ;
-  text-align: center;
-  font-size: 22px ;
-  font-family: 'Poppins', sans-serif;
-}
-
-.question {
-  margin-bottom: 15px ;
-  font-weight: 500;
-}
-
-.reponses {
-  display: flex;
-  gap: 20px ;
-  margin-top: 5px ;
-}
 
 .confirmation {
   margin-bottom: 20px ;
@@ -227,6 +177,7 @@ h2 {
   background-color: #FA6E89;
 }
 
+
 .btn-submit:disabled {
   background-color: #929090;
   cursor: not-allowed;
@@ -234,9 +185,11 @@ h2 {
 }
 
 @media screen and (max-width: 768px) {
+
   .questionnaire-container {
     padding: 100px 20px 30px ;
   }
+
 
   .type-don {
     flex-direction: column;
@@ -261,24 +214,6 @@ h2 {
     margin-bottom: 30px ;
   }
 
-  .section {
-    padding: 15px ;
-  }
-
-  .section h3 {
-    font-size: 18px;
-    margin-bottom: 20px ;
-  }
-
-  .question {
-    font-size: 14px ;
-  }
-
-  .reponses {
-    flex-direction: column;
-    gap: 10px ;
-  }
-
   .confirmation {
     font-size: 14px ;
     padding: 15px ;
@@ -298,16 +233,16 @@ h2 {
     min-width: 24px;
     min-height: 24px;
   }
-
 }
 </style>
 <script setup>
+
 
 import { ref, watch } from 'vue' ;
 import { useRouter } from 'vue-router' ;
 
 const router = useRouter() ;
-const selectedType = ref('sanguin');
+const selectedType = ref('organe');
 
 const accepte = ref(false) ;
 
@@ -333,28 +268,5 @@ watch(selectedType, (newValue) => {
   }
 });
 
-const sante = [
-  "Avez-vous été malade récemment (fièvre, infection) ?",
-  "Prenez-vous des médicaments ? Si oui, lesquels ?",
-  "Avez-vous des problèmes de santé chroniques (diabètes, problèmes cardiaques, etc.) ?",
-  "Avez-vous été hospitalisé récemment ?",
-  "Avez-vous eu une intervention chirurgicale récemment ?",
-  "Avez-vous déjà eu des problèmes de sang ou de coagulation ?",
-  "Avez-vous déjà reçu une transfusion sanguine ?",
-  "Avez-vous reçu une greffe ?"
-];
-
-const risque = [
-  "Avez-vous eu des relations sexuelles avec une personne atteinte du VIH, de l’hépatite B ou C ?",
-  "Avez-vous eu des relations sexuelles rémunérées ou avec une personne ayant ce type d’activité ?",
-  "Avez-vous eu des relations sexuelles en échange d'argent ou de drogue ?",
-  "Avez-vous voyagé récemment dans des zones endémiques de certaines maladies ?"
-];
-
-const antecedents = [
-  "Avez-vous déjà eu une hépatite ?",
-  "Avez-vous eu des crises d'épilepsie, des pertes de connaissance ou êtes dans le coma ?",
-  "Avez-vous déjà eu un cancer ?",
-  "Avez-vous reçu une greffe de la cornée ?"
-];
 </script>
+
