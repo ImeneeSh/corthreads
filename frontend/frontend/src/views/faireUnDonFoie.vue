@@ -12,10 +12,10 @@
     <div class="carte">
       <h2>Important à savoir</h2>
 
-      <p>En choisissant de faire un don d’organes, vous ne donnez pas immédiatement vos organes.
-        Votre inscription signifie simplement que vous vous portez volontaire, de votre vivant, pour faire
-        un don après votre décès si les conditions médicales le permettent. Votre volonté sera inscrite
-        dans le registre national des donneurs, consulté uniquement en cas de décès.</p>
+      <p>En choisissant de faire un don de foie ,un médecin affilié à notre plateforme vous contactera prochainement par e-mail
+        afin de programmer une visite médicale. Cette consultation permettra d’évaluer votre état de santé.
+        Si le médecin valide votre aptitude au don, votre profil sera ajouté à une liste dédiée aux donneurs
+        de foie et vous serez officiellement inscrit comme volontaire..</p>
 
       <div class="confirmation">
         <label>
@@ -242,7 +242,7 @@ import { ref, watch } from 'vue' ;
 import { useRouter } from 'vue-router' ;
 
 const router = useRouter() ;
-const selectedType = ref('organe');
+const selectedType = ref('foie');
 
 const accepte = ref(false) ;
 

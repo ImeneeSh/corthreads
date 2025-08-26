@@ -324,6 +324,10 @@ watch(selectedType, (newValue) => {
     targetRoute = '/faireDonOrgane';
   }
 
+  else if (newValue === 'foie') {
+    targetRoute = '/faireDonFoi';
+  }
+
   if (targetRoute && currentRoute !== targetRoute ){
     router.push(targetRoute);
   } else if (targetRoute && currentRoute === targetRoute ){
