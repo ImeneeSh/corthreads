@@ -12,6 +12,7 @@ import partagerAppel from '@/views/partagerAppel.vue'
 import faireDonSang from '@/views/faireUnDonSang.vue'
 import faireDonOrgane from '@/views/faireUnDonOrgane.vue'
 import faireDonFoie from '@/views/faireUnDonFoie.vue'
+import listeCandidatsDons from '@/views/listeCandidatsDons.vue'
 
 const routes = [
     {
@@ -78,6 +79,11 @@ const routes = [
         path: '/faireDonFoi',
         name: 'FaireDonFoi',
         component: faireDonFoie
+    },
+    {
+        path: '/listeCandidatsDons',
+        name: 'ListeCandidatsDons',
+        component: listeCandidatsDons
     }
 ]
 
