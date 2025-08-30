@@ -258,7 +258,7 @@
   display: flex ;
   justify-content: flex-end;
   gap: 16px ;
-  margin-top: 20px ;
+  margin-top: 26px ;
 }
 
 .btn-don {
@@ -362,10 +362,24 @@
     gap: 8px ;
   }
 
+  .btn-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px ;
+    width: 100% ;
+    margin-top: 26px ;
+  }
+
   .btn-don {
-    width: fit-content;
-    margin-left: auto;
-    margin-right: 0;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 14px ;
+    font-size: 14px ;
+  }
+
+  .icon-don {
+    width: 16px ;
+    height: 16px ;
   }
 
   .voir-plus {
