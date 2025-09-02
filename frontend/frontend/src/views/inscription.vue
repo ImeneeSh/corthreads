@@ -106,6 +106,7 @@ input {
 import {ref, reactive, provide } from "vue";
 import EtapeRole from './etapeRole.vue' ;
 import EtapeMail from './etapeMail.vue' ;
+import EtapeNom from './etapeNomPrenom.vue'
 
 const etapeActuelle = ref(0);
 
@@ -127,6 +128,7 @@ provide("formData", formData);
 const etapes = [
   EtapeRole,
   EtapeMail,
+  EtapeNom,
 ];
 
 function suivant() {
