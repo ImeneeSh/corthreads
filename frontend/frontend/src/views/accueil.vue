@@ -7,7 +7,7 @@
 
     <!-- section hero -->
     <section class="hero">
-      <img src="@/assets/pexels-artempodrez-6823667%20-%20Copie.jpg" alt="Ruban du don" class="hero-bg" />
+      <img src="@/assets/bannerr.jpg" alt="Ruban du don" class="hero-bg" />
       <div class="hero-content">
         <h1 class="hero-titre">"Les liens du coeur"</h1>
         <p class="hero-subtitle">
