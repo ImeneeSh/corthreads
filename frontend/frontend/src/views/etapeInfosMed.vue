@@ -97,6 +97,22 @@ input:focus {
   background-color: #103056;
 }
 
+@media screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    gap: 8px ;
+  }
+
+  select, input[type="date"] {
+    font-size: 14px ;
+    min-width: 100% ;
+  }
+
+  .continuer-btn {
+    font-size: 14px;
+  }
+}
+
 </style>
 <script setup>
 
