@@ -103,10 +103,12 @@ input {
 
 </style>
 <script setup>
-import {ref, reactive, provide } from "vue";
+import {ref, reactive, provide , computed } from "vue";
 import EtapeRole from './etapeRole.vue' ;
 import EtapeMail from './etapeMail.vue' ;
-import EtapeNom from './etapeNomPrenom.vue'
+import EtapeNom from './etapeNomPrenom.vue' ;
+import EtapeInfoCit from './etapeInfosCitoyen.vue'
+import EtapeInfoMed from './etapeInfosMed.vue'
 
 const etapeActuelle = ref(0);
 
@@ -121,23 +123,39 @@ const formData = reactive({
   wilaya: "",
   groupeSanguin: "",
   rhesus: "",
+  specialite:"",
+  etablissement: ""
 });
 
 provide("formData", formData);
 
-const etapes = [
+const etapesCitoyen = [
   EtapeRole,
   EtapeMail,
   EtapeNom,
+  EtapeInfoCit,
+];
+
+const etapesMedecin = [
+  EtapeRole,
+  EtapeMail,
+  EtapeNom,
+  EtapeInfoMed,
 ];
 
 function suivant() {
-  if (etapeActuelle.value < etapes.length -1) {
+  if (etapeActuelle.value < etapes.value.length -1) {
     etapeActuelle.value ++;
   } else {
     console.log("Données finales :", formData);
     // appel d'api d'inscription ici
   }
 }
+
+const etapes = computed(() => {
+  if(formData.role === "Medecin") return etapesMedecin;
+  if(formData.role === "Citoyen") return etapesCitoyen;
+  return [EtapeRole];
+})
 
 </script>
