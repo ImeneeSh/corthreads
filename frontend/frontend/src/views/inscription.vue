@@ -1,8 +1,7 @@
 <template>
   <div class="inscription">
     <div class="illustration">
-      <img src="@/assets/logo-removebg-preview.png" alt="logo" class="logo" />
-      <img src="@/assets/connexion-removebg-preview.png" alt="illustration" class="personne" />
+      <img src="@/assets/Design%20sans%20titre%20(1).png" alt="illustration" class="illustration-image" />
     </div>
 
     <div class="formulaire">
@@ -27,25 +26,19 @@
 
 .illustration {
   width: 50% ;
-  background : linear-gradient(135deg, #C1CEFD 0%, #AAB8F5 100%);
+  height: 100vh ;
+  overflow: hidden;
   display: flex ;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 40px ;
-  position: relative;
+  justify-content: center;
+  padding: 0 ;
 }
 
-.logo {
-  height: 150px ;
-  margin-top : 30px ;
-}
-
-.personne {
-  width: 100%;
-  max-width: 400px ;
-  height: auto ;
-  object-fit: contain ;
+.illustration-image {
+  width: 100% ;
+  height: 100% ;
+  object-fit: cover;
+  object-position: center;
 }
 
 .formulaire {

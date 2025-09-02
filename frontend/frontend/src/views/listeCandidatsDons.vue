@@ -55,10 +55,11 @@
         </div>
 
         <div class="btn-group">
-         <button class="btn-don btn-contacter">
-            <img src="@/assets/lettre.png" class="icon-don" alt="don icon">
-            Contacter
-          </button>
+
+          <button class="btn-don btn-contacter" @click="gererEmail(index)">
+              <img src="@/assets/lettre.png" class="icon-don" alt="don icon">
+              Contacter
+            </button>
 
           <button class="btn-don btn-supprimer">
             <img src="@/assets/supprimer%20(1).png" class="icon-don" alt="don icon">
@@ -294,6 +295,7 @@
   border: 2px solid #FF9900;
 }
 
+
 .icon-don {
   width: 16px ;
   height: 16px ;
@@ -430,6 +432,8 @@ const wilayas = [
 
 const niveauxUrgence = ["Normal", "Urgent"]
 
+const emailVisible = ref(null)
+
 onMounted( async () => {
   try {
     const reponse = await axios.get('http://localhost:8080/api/posts/recherche?typePost=Appel_don')
@@ -482,4 +486,13 @@ async function appliquerFiltres() {
     loading.value = false
   }
 }
+
+function gererEmail(index: number) {
+  emailVisible.value = emailVisible.value === index ? null : index ;
+}
+
+function copierEmail(email: string) {
+  navigator.clipboard.writeText(email);
+}
+
 </script>
