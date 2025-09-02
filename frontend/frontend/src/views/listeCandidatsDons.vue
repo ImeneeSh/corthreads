@@ -56,15 +56,35 @@
 
         <div class="btn-group">
 
-          <button class="btn-don btn-contacter" @click="gererEmail(index)">
-              <img src="@/assets/lettre.png" class="icon-don" alt="don icon">
-              Contacter
+          <div class="btn-email-wrapper">
+            <button class="btn-don btn-contacter" @click.stop="gererEmail(index)">
+                <img src="@/assets/lettre.png" class="icon-don" alt="don icon">
+                Contacter
             </button>
 
-          <button class="btn-don btn-supprimer">
-            <img src="@/assets/supprimer%20(1).png" class="icon-don" alt="don icon">
-            Supprimer
-          </button>
+            <div v-if="emailVisible === index" class="email-box" @click.stop>
+              <p class="email-label">Adresse mail de l'utilisateur :</p>
+              <div class="email-content">
+                <input class="email-input" type="text" :value="post.utilisateur.idUser" readonly />
+                <img src="@/assets/interface.png" class="copy-icon" alt="Copier" @click="copierEmail(post.utilisateur.idUser)" />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-email-wrapper">
+            <button class="btn-don btn-supprimer" @click="afficherSupp(index)">
+              <img src="@/assets/supprimer%20(1).png" class="icon-don" alt="don icon">
+              Supprimer
+            </button>
+
+            <div v-if="indexSupp === index" class="boite-confirmation" @click.stop >
+              <p class="question-confirmation">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+              <div class="boutons-confirmation">
+                <button class="btn-don btn-supprimer" @click="confirmerSupp(index)">Confirmer</button>
+                <button class="btn-don btn-annuler" @click="annulerSupp">Annuler</button>
+              </div>
+            </div>
+          </div>
 
           <button class="btn-don btn-attente">
             <img src="@/assets/horloge-murale.png" class="icon-don" alt="don icon">
@@ -178,9 +198,12 @@
 .carte {
   background-color: white ;
   border-radius: 12px ;
-  padding: 20px ;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: 0.3s ease ;
+  position: relative ;
+  z-index: 1 ;
+  overflow: visible ;
+  padding: 20px ;
 }
 
 .carte-header {
@@ -276,10 +299,78 @@
   margin-top: 0;
 }
 
+.btn-email-wrapper {
+  position: relative;
+}
+
 .btn-contacter {
   background-color: #103056;
   color: white;
   cursor: pointer;
+}
+
+.email-box {
+  position: absolute ;
+  top: auto ;
+  bottom: 110% ;
+  right: 0 ;
+  background-color: white;
+  border: 1px solid #D0D0D0;
+  border-radius: 12px;
+  padding: 16px ;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  max-width: 360px ;
+  z-index: 100 ;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.email-label {
+  font-weight: bold;
+  margin-bottom: 8px ;
+  color: #103056;
+  font-size: 14px;
+}
+
+.email-content {
+  display: flex ;
+  align-items: center;
+  gap: 8px ;
+}
+
+.email-input {
+  flex: 1 ;
+  padding: 10px 12px ;
+  border-radius: 8px ;
+  border: 1px solid #D0D0D0;
+  font-size: 14px ;
+  color: #333 ;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: #FA6E89;
+}
+
+.copy-icon {
+  width: 20px ;
+  height: 20px ;
+  cursor: pointer ;
+  transition : opacity 0.3s ease ;
+}
+
+.copy-icon:hover {
+  opacity: 0.7;
 }
 
 .btn-supprimer {
@@ -287,6 +378,42 @@
   color: white;
   border: none ;
   cursor: pointer;
+}
+
+.boite-confirmation {
+  position: absolute ;
+  top: auto ;
+  bottom: 110% ;
+  right: 0 ;
+  background-color: white;
+  border: 1px solid #D0D0D0;
+  border-radius: 12px;
+  padding: 16px ;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 320px ;
+  z-index: 100 ;
+  animation: fadeIn 0.3s ease-in-out;
+  text-align: center;
+}
+
+.question-confirmation {
+  font-weight: bold;
+  margin-bottom: 12px ;
+  color: #103056;
+  font-size: 14px;
+}
+
+.boutons-confirmation {
+  display: flex ;
+  justify-content: space-between;
+  gap: 10px ;
+}
+
+.btn-annuler {
+  background-color: white;
+  color: #103056;
+  border: 2px solid #ccc ;
+  cursor: pointer ;
 }
 
 .btn-attente {
@@ -407,6 +534,12 @@
   .urgence {
     font-size: 13px ;
   }
+
+  .email-box {
+    position: static;
+    width: 100% ;
+    margin-top: 12px ;
+  }
 }
 </style>
 <script setup lang="ts">
@@ -449,6 +582,8 @@ onMounted( async () => {
 const postsAffiches = computed(() => {
   return posts.value.slice(0, visiblePosts.value)
 })
+
+const indexSupp = ref<number | null>(null)
 
 function voirPlus() {
   visiblePosts.value += 4
@@ -493,6 +628,19 @@ function gererEmail(index: number) {
 
 function copierEmail(email: string) {
   navigator.clipboard.writeText(email);
+}
+
+function afficherSupp(index: number){
+  indexSupp.value = index;
+}
+
+function annulerSupp(){
+  indexSupp.value = null ;
+}
+
+function confirmerSupp(index: number) {
+  indexSupp.value = null ;
+  // logique de suppression
 }
 
 </script>
