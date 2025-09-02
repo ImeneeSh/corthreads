@@ -1,7 +1,7 @@
 <template>
   <div class="etape-nom">
-    <input type="email" placeholder="Nom" required />
-    <input type="email" placeholder="Prénom" required />
+    <input type="email" v-model="formData.nom" placeholder="Nom" required />
+    <input type="email" v-model="formData.prenom" placeholder="Prénom" required />
 
     <button class="continuer-btn" type="submit" :disabled="!peutContinuer">
       Continuer <img src="@/assets/fleche-droite.png" alt="flèche" class="fleche-icon" />
