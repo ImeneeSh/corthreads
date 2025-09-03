@@ -13,6 +13,7 @@ import faireDonSang from '@/views/faireUnDonSang.vue'
 import faireDonOrgane from '@/views/faireUnDonOrgane.vue'
 import faireDonFoie from '@/views/faireUnDonFoie.vue'
 import listeCandidatsDons from '@/views/listeCandidatsDons.vue'
+import ListeDonneursPotentielSang from '@/views/listeDonneursPotentielSang.vue'
 
 const routes = [
     {
@@ -84,6 +85,11 @@ const routes = [
         path: '/listeCandidatsDons',
         name: 'ListeCandidatsDons',
         component: listeCandidatsDons
+    },
+    {
+        path: '/ListeDonneursPotentielSang',
+        name: 'ListeDonneursPotentiel',
+        component: ListeDonneursPotentielSang
     }
 ]
 
