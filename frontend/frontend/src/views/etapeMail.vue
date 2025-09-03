@@ -1,9 +1,9 @@
 <template>
   <div class="etape-mail">
-    <input type="email" v-model="formData.email" placeholder="Email" required />
+    <input type="email" v-model="formData.idUser" placeholder="Email" required />
 
     <div class="mdp-wrapper">
-      <input :type="motDePasseVisible ? 'text' : 'password'" v-model="formData.motDePasse" placeholder="Mot De Passe" required />
+      <input :type="motDePasseVisible ? 'text' : 'password'" v-model="formData.mdp" placeholder="Mot De Passe" required />
       <img :src="motDePasseVisible ? voir : cacher" alt="oeil" class="oeil" @click="motDePasseVisible = !motDePasseVisible" />
     </div>
 
@@ -115,11 +115,11 @@ const confirmation = ref("");
 const motDePasseVisible = ref(false);
 
 const motDePasseNonIdentique = computed(() =>
-  formData.motDePasse && confirmation.value && formData.motDePasse !== confirmation.value
+  formData.mdp && confirmation.value && formData.mdp !== confirmation.value
 );
 
 const peutContinuer = computed(() =>
-  formData.email && formData.motDePasse && confirmation.value && formData.motDePasse === confirmation.value
+  formData.idUser && formData.mdp && confirmation.value && formData.mdp === confirmation.value
 );
 </script>
 

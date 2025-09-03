@@ -114,15 +114,15 @@ const etapeActuelle = ref(0);
 
 const formData = reactive({
   role: "",
-  email: "",
-  motDePasse: "",
+  idUser: "",
+  mdp: "",
   nom: "",
   prenom: "",
   genre: "",
   dateNaissance: "",
   wilaya: "",
-  groupeSanguin: "",
-  rhesus: "",
+  groupeSang: "",
+  rh: "",
   specialite:"",
   etablissement: ""
 });

@@ -15,14 +15,14 @@
         <option v-for="(wilaya, i) in wilayas" :key="i" :value="wilaya">{{ wilaya }} </option>
       </select>
 
-      <select v-model="formData.groupeSanguin" required>
+      <select v-model="formData.groupeSang" required>
         <option disabled value="">Groupe sanguin</option>
         <option v-for="(grpsang, i) in grpsangs" :key="i" :value="grpsang">{{ grpsang }} </option>
       </select>
     </div>
 
     <div class="row">
-      <select v-model="formData.rhesus" required>
+      <select v-model="formData.rh" required>
         <option disabled value="">Rhesus</option>
         <option v-for="(rh, i) in rhs" :key="i" :value="rh">{{ rh }} </option>
       </select>
@@ -129,6 +129,6 @@ const rhs = [
 ]
 
 const peutContinuer = computed(() =>
-    formData.genre && formData.dateNaissance && formData.wilaya && formData.groupeSanguin && formData.rhesus
+    formData.genre && formData.dateNaissance && formData.wilaya && formData.groupeSang && formData.rh
 );
 </script>
