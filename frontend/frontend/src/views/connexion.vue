@@ -282,16 +282,34 @@ onBeforeMount(() => {
   document.body.classList.remove('no-scroll');
 })
 
-function connexionGgl() {
-  signInWithPopup(auth , provider)
-      .then((result) => {
-        const user = result.user;
-        console.log("Connecté avec Google :", user);
-        // ce qui se passe après
-      })
-      .catch((error) => {
-        console.error("Erreur Google : " ,error);
-      });
+async function connexionGgl() {
+  try {
+    const resultat = await signInWithPopup(auth, provider) ;
+    const user = resultat.user ;
+    console.log ("Connecté avec Google :", user);
+
+    const idUser = user.email ;
+
+    const reponse = await axios.get(`http://localhost:8080/api/utilisateurs/${idUser}`);
+
+    if(reponse.data) {
+      sessionStorage.setItem('idUser', idUser);
+      sessionStorage.setItem('nom', user.displayName.split(" ")[1] || '');
+      sessionStorage.setItem('prenom', user.displayName.split(" ")[0] || '');
+      sessionStorage.setItem('role', reponse.data.role);
+
+      await router.push('/');
+    } else {
+      sessionStorage.setItem('googleInscription' , 'true');
+      sessionStorage.setItem('idUser', idUser);
+      sessionStorage.setItem('nom', user.displayName.split(" ")[1] || '');
+      sessionStorage.setItem('prenom', user.displayName.split(" ")[0] || '');
+
+      await router.push('/inscription');
+    }
+  } catch (error) {
+    console.log("Erreur Google : ",error);
+  }
 }
 
 async function connexion(){

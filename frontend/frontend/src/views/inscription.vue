@@ -103,7 +103,7 @@ input {
 
 </style>
 <script setup>
-import {ref, reactive, provide , computed } from "vue";
+import {ref, reactive, provide , computed, onMounted } from "vue";
 import {useRouter} from 'vue-router' ;
 import axios from 'axios' ;
 import EtapeRole from './etapeRole.vue' ;
@@ -117,6 +117,8 @@ const etapeActuelle = ref(0);
 const router = useRouter();
 const chargement = ref(false) ;
 const erreurInsc = ref('') ;
+
+const viaGoogle = ref(false) ;
 
 const formData = reactive({
   role: "",
@@ -147,6 +149,16 @@ const etapesMedecin = [
   EtapeMail,
   EtapeNom,
   EtapeInfoMed,
+];
+
+const etapesCitoyenGoogle = [
+    EtapeRole ,
+    EtapeInfoCit,
+];
+
+const etapesMedecinGoogle = [
+  EtapeRole ,
+  EtapeInfoCit,
 ];
 
 provide("chargement" , chargement) ;
@@ -180,9 +192,28 @@ async function suivant() {
 }
 
 const etapes = computed(() => {
-  if(formData.role === "Medecin") return etapesMedecin;
-  if(formData.role === "Citoyen") return etapesCitoyen;
-  return [EtapeRole];
+  if(viaGoogle.value){
+    if(formData.role === "Medecin") return etapesMedecinGoogle;
+    if(formData.role === "Citoyen") return etapesCitoyenGoogle;
+    return [EtapeRole];
+  }else {
+    if(formData.role === "Medecin") return etapesMedecin;
+    if(formData.role === "Citoyen") return etapesCitoyen;
+    return [EtapeRole];
+  }
+}) ;
+
+onMounted(() => {
+  const fromGgl = sessionStorage.getItem('googleInscription');
+
+  if(fromGgl){
+    viaGoogle.value = true ;
+
+    formData.idUser = sessionStorage.getItem('idUser') || '';
+    formData.nom = sessionStorage.getItem('nom') || '';
+    formData.prenom = sessionStorage.getItem('prenom') || '';
+    sessionStorage.removeItem('googleInscription');
+  }
 })
 
 
