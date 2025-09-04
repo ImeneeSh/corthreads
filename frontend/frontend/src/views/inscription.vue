@@ -104,6 +104,8 @@ input {
 </style>
 <script setup>
 import {ref, reactive, provide , computed } from "vue";
+import {useRouter} from 'vue-router' ;
+import axios from 'axios' ;
 import EtapeRole from './etapeRole.vue' ;
 import EtapeMail from './etapeMail.vue' ;
 import EtapeNom from './etapeNomPrenom.vue' ;
@@ -111,6 +113,10 @@ import EtapeInfoCit from './etapeInfosCitoyen.vue'
 import EtapeInfoMed from './etapeInfosMed.vue'
 
 const etapeActuelle = ref(0);
+
+const router = useRouter();
+const chargement = ref(false) ;
+const erreurInsc = ref('') ;
 
 const formData = reactive({
   role: "",
@@ -143,12 +149,33 @@ const etapesMedecin = [
   EtapeInfoMed,
 ];
 
-function suivant() {
+provide("chargement" , chargement) ;
+
+async function inscription(){
+  chargement.value = true ;
+  erreurInsc.value = '' ;
+  try {
+    const reponse = await axios.post("http://localhost:8080/api/utilisateurs/inscription" , formData);
+    console.log("Insciption réussie :" , reponse.data);
+    sessionStorage.setItem('inscriptionReussie' , 'true');
+    sessionStorage.setItem('idUser', formData.idUser);
+    sessionStorage.setItem('nom', formData.nom);
+    sessionStorage.setItem('prenom', formData.prenom);
+    sessionStorage.setItem('role', formData.role);
+    await router.push('/');
+  }catch(error) {
+    console.log("Erreur lors de l'inscription :" , error);
+    erreurInsc.value = "L'inscription a échoué. Veuillez réessayer." ;
+  } finally {
+    chargement.value = false ;
+  }
+}
+
+async function suivant() {
   if (etapeActuelle.value < etapes.value.length -1) {
     etapeActuelle.value ++;
   } else {
-    console.log("Données finales :", formData);
-    // appel d'api d'inscription ici
+    await inscription();
   }
 }
 
@@ -157,5 +184,6 @@ const etapes = computed(() => {
   if(formData.role === "Citoyen") return etapesCitoyen;
   return [EtapeRole];
 })
+
 
 </script>

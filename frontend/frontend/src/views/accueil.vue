@@ -3,7 +3,7 @@
 
     <!-- popup de bienvenu -->
 
-    <PopupSucces v-if="showPopup" :titre="'Votre connexion a été effectuée avec succès !'" :message="`Bienvenue ${prenom} ${nom} !`" :illustration="celebrationImg" @fermer="closePopup" />
+    <PopupSucces v-if="showPopup" :titre="popupTitre" :message="popupMessage" :illustration="celebrationImg" @fermer="closePopup" />
 
     <!-- section hero -->
     <section class="hero">
@@ -342,6 +342,8 @@ import celebrationImg from '@/assets/celebration.png'
 const nom = ref('');
 const prenom = ref('');
 const showPopup = ref(false);
+const popupTitre = ref('');
+const popupMessage = ref('');
 
 onMounted(() => {
   AOS.init({
@@ -352,11 +354,22 @@ onMounted(() => {
 
   const nomStorage = sessionStorage.getItem('nom');
   const prenomStorage = sessionStorage.getItem('prenom');
+  const inscriptionReussie = sessionStorage.getItem('inscriptionReussie');
 
-  if (nomStorage && prenomStorage) {
+  if (inscriptionReussie) {
+    popupTitre.value ="Votre inscription a été effectuée avec succès !"
+    popupMessage.value = "Bienvenu chez la famille Corthreads" ;
+    showPopup.value = true ;
+    sessionStorage.removeItem('inscriptionReussie');
+  }
+  else if (nomStorage && prenomStorage) {
     nom.value = nomStorage ;
     prenom.value = prenomStorage ;
+    popupTitre.value ="Votre connexion a été effectuée avec succès !"
+    popupMessage.value =  `Bienvenue ${prenom.value} ${nom.value} !`;
     showPopup.value = true;
+    sessionStorage.removeItem('nom');
+    sessionStorage.removeItem('prenom');
   }
 })
 

@@ -22,9 +22,16 @@
       <input type="text" v-model="formData.etablissement" placeholder="Etablissement de fonction" required />
     </div>
 
-    <button class="continuer-btn" type="submit" :disabled="!peutContinuer" >
+    <p v-if="erreurInsc" class="message-erreur">{{ erreurInsc }}</p>
+
+    <button v-if="!chargement" class="continuer-btn" type="submit" :disabled="!peutContinuer" >
       Terminer !
     </button>
+
+    <div v-else class="chargement-container">
+      <div class="spinner"></div>
+    </div>
+
   </div>
 </template>
 
@@ -97,6 +104,37 @@ input:focus {
   background-color: #103056;
 }
 
+.chargement-container {
+  display: flex ;
+  justify-content: center ;
+  align-items : center ;
+  height: 48px ;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #FA6E89;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.message-erreur {
+  color: #FA6E89;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+
 @media screen and (max-width: 768px) {
   .row {
     flex-direction: column;
@@ -119,6 +157,8 @@ input:focus {
 import {computed, inject} from "vue";
 
 const formData = inject("formData");
+const chargement = inject("chargement");
+const erreurInsc = inject ("erreurInsc") ;
 
 
 const wilayas = [
