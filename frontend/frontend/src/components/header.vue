@@ -9,9 +9,9 @@
     </div>
 
     <nav class="nav-links">
-      <router-link to="/" class="nav-item">Accueil</router-link>
-      <router-link to="/appelDon">Appels à dons</router-link>
-      <router-link to="/temoignage">Témoignages</router-link>
+      <router-link to="/" class="nav-item">{{ t('accueil') }}</router-link>
+      <router-link to="/appelDon">{{ t('appelsADons') }}</router-link>
+      <router-link to="/temoignage">{{ t('temoignages') }}</router-link>
     </nav>
 
     <div class="section-droite">
@@ -24,12 +24,12 @@
         <div v-if="langVisible" class="lang-dropdown">
           <div class="langue-option" :class="{ active: selectedLang === 'fr'}" @click.stop="changerLangue('fr')">
             <img src="@/assets/france.png" alt="Français" />
-            <span>Français</span>
+            <span>{{ t('francais') }}</span>
           </div>
 
           <div class="langue-option" :class="{ active: selectedLang === 'en'}" @click.stop="changerLangue('en')">
             <img src="@/assets/royaume-uni.png" alt="Anglais" />
-            <span>Anglais</span>
+            <span>{{ t('anglais') }}</span>
           </div>
 
         </div>
@@ -43,16 +43,16 @@
         <div v-if="menuUtil" class="user-dropdown">
           <div class="user-option" @click="router.push('/')"> <!-- après push dans la page des paramètres -->
             <img src="@/assets/parametres-cog.png" alt="Paramètres" />
-            <span class="parametres-text">Paramètres</span>
+            <span class="parametres-text">{{ t('parametres') }}</span>
           </div>
 
           <div class="user-option" @click="deconnexion">
             <img src="@/assets/deconnexion.png" alt="Déconnexion" />
-            <span class="deconnexion-text">Déconnexion</span>
+            <span class="deconnexion-text">{{ t('deconnexion') }}</span>
           </div>
         </div>
       </div>
-      <router-link v-if="!estConnecter" to="/connexion" class="seConnecter-button">Se Connecter</router-link>
+      <router-link v-if="!estConnecter" to="/connexion" class="seConnecter-button">{{ t('seConnecter') }}</router-link>
     </div>
   </header>
 
@@ -416,6 +416,9 @@
 
 import {onBeforeMount, onMounted, ref} from 'vue' ;
 import { useRouter , useRoute } from 'vue-router'
+import {useI18n} from "vue-i18n";
+
+const {t, locale} = useI18n();
 
 const menuActive = ref(false);
 const langVisible = ref(false);
@@ -455,6 +458,12 @@ function gererClick(e) {
 }
 
 onMounted(() => {
+  const lang = localStorage.getItem('langue');
+
+  if(lang){
+    locale.value = lang
+    selectedLang.value = lang
+  }
   window.addEventListener('click',gererClick);
   const storedRole = sessionStorage.getItem('role')
 
@@ -470,7 +479,9 @@ onBeforeMount(() => {
 
 function changerLangue(langue) {
   selectedLang.value = langue;
+  locale.value = langue
   langVisible.value = false;
+  localStorage.setItem('langue', langue)
 }
 
 function deconnexion(){
