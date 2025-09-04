@@ -43,7 +43,10 @@ public class SecurityConfig {
                                 "/api/posts/**",
                                 "/api/auth/**",
                                 "/api/questionnaires/**",
-                                "/error"
+                                "/error" ,
+                                "/api/qstgen",
+                                "/api/qstrisk",
+                                "/api/qstantc"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
