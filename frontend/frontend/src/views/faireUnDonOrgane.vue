@@ -244,7 +244,6 @@ import { ref, watch } from 'vue' ;
 import { useRouter } from 'vue-router' ;
 
 import Popup from "@/components/popupSucces.vue";
-import illustrationSuccess from "@/assets/celebration.png";
 import axios from 'axios';
 
 const router = useRouter() ;
