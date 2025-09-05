@@ -17,26 +17,27 @@
         <div class="carte-header">
           <img src="@/assets/utilisateur.png" alt="user icon" class="icon-user" />
           <div class="header-info">
-            <h3>Karim test</h3>
+            <h3>{{ post.utilisateur.prenom }} {{ post.utilisateur.nom }}</h3>
           </div>
         </div>
 
+        <p class="plus">Plus de détails :</p>
         <div class="infos">
-          <p><strong>Date de naissance :</strong>24-06-2000</p>
-          <p><strong>Genre :</strong>Homme</p>
-          <p><strong>Groupe Sanguin :</strong>B</p>
-          <p><strong>Rhesus :</strong>positif</p>
-          <p><strong>Wilaya :</strong>Béjaia</p>
-          <p><strong>Est donneur de sang :</strong>Vrai</p>
-          <p><strong>Date du dernier don :</strong>15-09-2007</p>
+          <p><strong>Date de naissance :</strong> {{ afficherValeur(post.utilisateur.dateNaissance) }}</p>
+          <p><strong>Genre :</strong> {{ afficherValeur(post.utilisateur.genre) }}</p>
+          <p><strong>Groupe Sanguin :</strong> {{ afficherValeur(post.utilisateur.groupeSang) }}</p>
+          <p><strong>Rhesus :</strong> {{ afficherValeur(post.utilisateur.rh) }}</p>
+          <p><strong>Wilaya :</strong> {{ afficherValeur(post.utilisateur.wilaya) }}</p>
+          <p><strong>Est donneur de sang :</strong> {{ afficherValeur(post.utilisateur.donneurSang) }}</p>
+          <p><strong>Date du dernier don de sang :</strong> {{ afficherValeur(post.utilisateur.dernierDonSang) }}</p>
         </div>
 
         <div class="btn-group">
 
-            <button class="btn-don btn-formulaire">
-              <img src="@/assets/une-reponse-rapide.png" class="icon-don" alt="don icon">
-              Etude du formulaire
-            </button>
+          <button class="btn-don btn-formulaire">
+            <img src="@/assets/une-reponse-rapide.png" class="icon-don" alt="don icon">
+            Etude du formulaire
+          </button>
 
           <div class="btn-email-wrapper">
             <button class="btn-don btn-contacter" @click.stop="gererEmail(index)">
@@ -74,7 +75,7 @@
           </button>
         </div>
       </div>
-      </div>
+    </div>
 
     <button class="voir-plus" @click="voirPlus" v-if="visiblePosts <= posts.length">
       Voir plus
@@ -182,6 +183,34 @@ label {
   font-weight: 600;
 }
 
+.voir-plus {
+  margin-top: 40px ;
+  background-color: #FA6E89;
+  color: white ;
+  border: none ;
+  padding : 10px 40px ;
+  border-radius: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+}
+
+.voir-plus:hover {
+  background-color: #103056;
+}
+
+.icon-fleche {
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  margin-left:6px ;
+  transform: translateY(1px);
+}
+
 
 .loader-container {
   display: flex;
@@ -204,7 +233,6 @@ label {
   100% { transform: rotate(360deg); }
 }
 
-
 .carte-appel {
   display : flex ;
   flex-direction: column;
@@ -214,9 +242,12 @@ label {
 .carte {
   background-color: white ;
   border-radius: 12px ;
-  padding: 20px ;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: 0.3s ease ;
+  position: relative ;
+  z-index: 1 ;
+  overflow: visible ;
+  padding: 20px ;
 }
 
 .carte-header {
@@ -268,55 +299,6 @@ label {
   margin-right: 5px ;
 }
 
-.btn-don {
-  margin-top: 20px;
-  background-color: #103056;
-  color: white;
-  border: none ;
-  padding: 10px 20px ;
-  border-radius: 20px;
-  cursor: pointer ;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  gap: 8px;
-  transition: background-color 0.3s ease;
-}
-
-.icon-don {
-  width: 16px ;
-  height: 16px ;
-}
-
-.voir-plus {
-  margin-top: 40px ;
-  background-color: #FA6E89;
-  color: white ;
-  border: none ;
-  padding : 10px 40px ;
-  border-radius: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-  margin-left: auto;
-}
-
-.voir-plus:hover {
-  background-color: #103056;
-}
-
-.icon-fleche {
-  height: 16px;
-  width: 16px;
-  vertical-align: middle;
-  margin-left:6px ;
-  transform: translateY(1px);
-}
-
 .btn-group {
   display: flex ;
   justify-content: flex-end;
@@ -342,15 +324,15 @@ label {
   position: relative;
 }
 
-.btn-formulaire {
-  background-color: #FA6E89;
-  color: white;
-  cursor: pointer ;
-}
-
 .btn-contacter {
   background-color: #103056;
   color: white;
+  cursor: pointer;
+}
+
+.btn-formulaire {
+  background-color: #FA6E89;
+  color: white ;
   cursor: pointer;
 }
 
@@ -500,6 +482,18 @@ label {
     min-height: 24px;
   }
 
+  .voir-plus {
+    width: fit-content;
+  }
+
+  .infos p {
+    font-size: 13px ;
+  }
+
+  .header-info h3 {
+    font-size: 15px ;
+  }
+
   .carte {
     padding: 16px ;
   }
@@ -510,43 +504,51 @@ label {
     gap: 8px ;
   }
 
+  .btn-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px ;
+    width: 100% ;
+    margin-top: 26px ;
+  }
+
   .btn-don {
-    width: fit-content;
-    margin-left: auto;
-    margin-right: 0;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 14px ;
+    font-size: 14px ;
   }
 
-  .voir-plus {
-    width: fit-content;
-  }
-
-  .infos {
-    gap: 15px ;
-  }
-
-  .infos p {
-    font-size: 13px ;
-  }
-
-  .header-info h3 {
-    font-size: 15px ;
+  .icon-don {
+    width: 16px ;
+    height: 16px ;
   }
 }
 </style>
 <script setup lang="ts">
 
-import {ref, watch, computed} from "vue";
+import {ref, watch, computed, onMounted} from "vue";
 import { useRouter } from 'vue-router';
+import axios from "axios";
+
+function afficherValeur(val: any): string {
+  if (val === null || val === undefined) {
+    return '/';
+  } else if (typeof val === 'boolean') {
+    return val ? 'vrai' : 'faux' ;
+  } else {
+    return val ;
+  }
+}
 
 const router = useRouter();
+
+const error = ref(null) ;
 
 const selectedType = ref('sanguin');
 const loading = ref(true) ;
 const posts = ref([]);
-const error = ref(null);
 
-
-const emailVisible = ref(null)
 
 watch(selectedType, (newValue) => {
 
@@ -554,7 +556,7 @@ watch(selectedType, (newValue) => {
   let targetRoute = '' ;
 
   if (newValue === 'sanguin') {
-    targetRoute = '/listeDonneursPotentielSang'; //chemin
+    targetRoute = '/listeDonneursPotentielSang';
   }
 
   else if (newValue === 'foie') {
@@ -569,6 +571,32 @@ watch(selectedType, (newValue) => {
     });
   }
 });
+
+const visiblePosts = ref(4)
+
+const emailVisible = ref(null)
+
+onMounted( async () => {
+  try {
+    const reponse = await axios.get('http://localhost:8080/api/incrsang')
+    posts.value = reponse.data
+  }catch (err) {
+    console.error('Erreur lors de la récupération des données',err)
+    error.value = "impossible de charger les appels à dons."
+  }finally {
+    loading.value = false
+  }
+})
+
+const postsAffiches = computed(() => {
+  return posts.value.slice(0, visiblePosts.value)
+})
+
+const indexSupp = ref<number | null>(null)
+
+function voirPlus() {
+  visiblePosts.value += 4
+}
 
 function gererEmail(index: number) {
   emailVisible.value = emailVisible.value === index ? null : index ;
@@ -589,18 +617,6 @@ function annulerSupp(){
 function confirmerSupp(index: number) {
   indexSupp.value = null ;
   // logique de suppression
-}
-
-const postsAffiches = computed(() => {
-  return posts.value.slice(0, visiblePosts.value)
-})
-
-const indexSupp = ref(null) ;
-
-const visiblePosts = ref(4)
-
-function voirPlus() {
-  visiblePosts.value += 4
 }
 </script>
 
