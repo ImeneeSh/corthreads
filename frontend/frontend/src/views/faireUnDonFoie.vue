@@ -24,8 +24,10 @@
         </label>
       </div>
 
-      <button class="btn-submit" :disabled="!accepte">M'inscrire</button>
+      <button class="btn-submit" :disabled="!accepte" @click="soumettreInscription">M'inscrire</button>
     </div>
+
+    <Popup v-if="afficherPopup" :titre="popupTitre" :message="popupMessage" :illustration="illustrationPopup" @fermer="fermerPopup"/>
   </div>
 </template>
 
@@ -241,6 +243,9 @@ p {
 import { ref, watch } from 'vue' ;
 import { useRouter } from 'vue-router' ;
 
+import Popup from "@/components/popupSucces.vue";
+import axios from 'axios';
+
 const router = useRouter() ;
 const selectedType = ref('foie');
 
@@ -271,6 +276,33 @@ watch(selectedType, (newValue) => {
     });
   }
 });
+
+const soumettreInscription = async () => {
+  const idUser = sessionStorage.getItem('idUser');
+
+  try {
+    await axios.post('http://localhost:8080/api/incrfoie/ajout', {
+      idUser: idUser,
+      dateVisiteProgrammer: "2025-09-20" ,
+    });
+
+    sessionStorage.setItem("popupTitre", "Inscription réussie !");
+    sessionStorage.setItem("popupMessage", "Merci pour votre générosité. Votre inscription a été prise en compte.");
+    await router.push('/');
+  } catch (error) {
+    console.error("Erreur lors de l'inscription :", error);
+    afficherPopup.value = true;
+    popupTitre.value = "Erreur";
+    popupMessage.value = "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
+  }
+};
+
+const fermerPopup = () => {
+  afficherPopup.value = false;
+  if (rediriger.value) {
+    router.push('/');
+  }
+};
 
 </script>
 
