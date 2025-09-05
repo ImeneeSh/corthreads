@@ -47,7 +47,8 @@ public class SecurityConfig {
                                 "/api/qstrisk",
                                 "/api/qstantc" ,
                                 "/api/reponses/**",
-                                "/api/incrsang/**"
+                                "/api/incrsang/**",
+                                "/api/incrfoie/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
