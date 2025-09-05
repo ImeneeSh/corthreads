@@ -364,7 +364,7 @@ onMounted(async () => {
   if(!idUser) {
     afficherPopup.value = true
     popupTitre.value = 'Connexion requise'
-    popupMessage.value = 'Vous devez être connecté pour publier un appel à dons'
+    popupMessage.value = 'Vous devez être connecté pour faire un don'
     illustrationPopup.value = illustrationRequired
     rediriger.value = true
     return
