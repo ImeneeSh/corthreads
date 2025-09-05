@@ -345,6 +345,19 @@ const showPopup = ref(false);
 const popupTitre = ref('');
 const popupMessage = ref('');
 
+const popupTitreStorage = sessionStorage.getItem('popupTitre');
+const popupMessageStorage = sessionStorage.getItem('popupMessage');
+
+if (popupTitreStorage && popupMessageStorage) {
+  popupTitre.value = popupTitreStorage;
+  popupMessage.value = popupMessageStorage;
+  showPopup.value = true;
+
+  sessionStorage.removeItem('popupTitre');
+  sessionStorage.removeItem('popupMessage');
+}
+
+
 onMounted(() => {
   AOS.init({
     duration: 800,

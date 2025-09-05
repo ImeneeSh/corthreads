@@ -16,10 +16,10 @@
       <div class="section">
         <h3>Santé générale</h3>
         <div v-for="(question, index) in sante" :key="'sante-' + index" class="question">
-          <label>{{ question }}</label>
+          <label>{{ question.contenu }}</label>
           <div class="reponses">
-            <label><input type="radio" :name="'sante-' + index" /> Oui</label>
-            <label><input type="radio" :name="'sante-' + index" /> Non</label>
+            <label><input type="radio" :name="'sante-' + question.idQstGen" :value="true" v-model="reponses['sante-' + question.idQstGen]" /> Oui</label>
+            <label><input type="radio" :name="'sante-' + question.idQstGen" :value="false" v-model="reponses['sante-' + question.idQstGen]" /> Non</label>
           </div>
         </div>
      </div>
@@ -27,10 +27,10 @@
       <div class="section">
         <h3>Comportements à risque</h3>
         <div v-for="(question, index) in risque" :key="'risque-' + index" class="question">
-          <label>{{ question }}</label>
+          <label>{{ question.contenu }}</label>
           <div class="reponses">
-            <label><input type="radio" :name="'risque-' + index" /> Oui</label>
-            <label><input type="radio" :name="'risque-' + index" /> Non</label>
+            <label><input type="radio" :name="'risque-' + question.idQstRisk" :value="true" v-model="reponses['risque-' + question.idQstRisk]" /> Oui</label>
+            <label><input type="radio" :name="'risque-' + question.idQstRisk" :value="false" v-model="reponses['risque-' + question.idQstRisk]" /> Non</label>
           </div>
         </div>
       </div>
@@ -38,10 +38,10 @@
       <div class="section">
         <h3>Antécédents médicaux</h3>
         <div v-for="(question, index) in antecedents" :key="'ant-' + index" class="question">
-          <label>{{ question }}</label>
+          <label>{{ question.contenu }}</label>
           <div class="reponses">
-            <label><input type="radio" :name="'ant-' + index" /> Oui</label>
-            <label><input type="radio" :name="'ant-' + index" /> Non</label>
+            <label><input type="radio" :name="'ant-' + question.idQstAntc" :value="true" v-model="reponses['ant-' + question.idQstAntc]" />Oui</label>
+            <label><input type="radio" :name="'ant-' + question.idQstAntc" :value="false" v-model="reponses['ant-' + question.idQstAntc]" />Non</label>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
         </label>
      </div>
 
-      <button class="btn-submit" :disabled="!accepte">M'inscrire</button>
+      <button class="btn-submit" :disabled="!accepte" @click="soumettreRep">M'inscrire</button>
      </div>
 
     <Popup v-if="afficherPopup" :titre="popupTitre" :message="popupMessage" :illustration="illustrationPopup" @fermer="fermerPopup" />
@@ -310,6 +310,8 @@ import { useRouter } from 'vue-router' ;
 import Popup from "@/components/popupSucces.vue";
 import illustrationRequired from "@/assets/required.png";
 
+import axios from 'axios' ;
+
 
 const router = useRouter() ;
 const selectedType = ref('sanguin');
@@ -351,32 +353,13 @@ watch(selectedType, (newValue) => {
   }
 });
 
-const sante = [
-  "Avez-vous été malade récemment (fièvre, infection) ?",
-  "Prenez-vous des médicaments ? Si oui, lesquels ?",
-  "Avez-vous des problèmes de santé chroniques (diabètes, problèmes cardiaques, etc.) ?",
-  "Avez-vous été hospitalisé récemment ?",
-  "Avez-vous eu une intervention chirurgicale récemment ?",
-  "Avez-vous déjà eu des problèmes de sang ou de coagulation ?",
-  "Avez-vous déjà reçu une transfusion sanguine ?",
-  "Avez-vous reçu une greffe ?"
-];
+const sante = ref([]) ;
 
-const risque = [
-  "Avez-vous eu des relations sexuelles avec une personne atteinte du VIH, de l’hépatite B ou C ?",
-  "Avez-vous eu des relations sexuelles rémunérées ou avec une personne ayant ce type d’activité ?",
-  "Avez-vous eu des relations sexuelles en échange d'argent ou de drogue ?",
-  "Avez-vous voyagé récemment dans des zones endémiques de certaines maladies ?"
-];
+const risque = ref([]) ;
 
-const antecedents = [
-  "Avez-vous déjà eu une hépatite ?",
-  "Avez-vous eu des crises d'épilepsie, des pertes de connaissance ou êtes dans le coma ?",
-  "Avez-vous déjà eu un cancer ?",
-  "Avez-vous reçu une greffe de la cornée ?"
-];
+const antecedents = ref([]) ;
 
-onMounted(() => {
+onMounted(async () => {
   const idUser = sessionStorage.getItem('idUser')
   if(!idUser) {
     afficherPopup.value = true
@@ -384,10 +367,27 @@ onMounted(() => {
     popupMessage.value = 'Vous devez être connecté pour publier un appel à dons'
     illustrationPopup.value = illustrationRequired
     rediriger.value = true
-  } else {
-    estConnecte.value = true
+    return
   }
-})
+
+  estConnecte.value = true ;
+
+  try {
+    const [resGen,resRisk,resAntc] = await Promise.all([
+        axios.get('http://localhost:8080/api/qstgen'),
+      axios.get('http://localhost:8080/api/qstrisk'),
+      axios.get('http://localhost:8080/api/qstantc'),
+    ]);
+
+    sante.value = resGen.data ;
+    risque.value = resRisk.data ;
+    antecedents.value = resAntc.data ;
+  } catch (error) {
+    console.log('Erreur lors de la récupération des questions :' , error);
+  }
+});
+
+const reponses = ref({}) ;
 
 const fermerPopup = () => {
   afficherPopup.value = false
@@ -396,4 +396,79 @@ const fermerPopup = () => {
     router.push('/')
   }
 }
+
+const soumettreRep = async () => {
+
+  const idUser = sessionStorage.getItem('idUser');
+
+  try {
+  const dejaInscrit = await axios.get(`http://localhost:8080/api/reponses/${idUser}`) ;
+  if(dejaInscrit.data.lenght > 0) {
+    afficherPopup.value = true;
+    popupTitre.value = "Déja inscrit";
+    popupMessage.value = "Vous avez déjà rempli ce formulaire. Merci pour votre contribution" ;
+    rediriger.value = true ;
+    return ;
+
+  }
+
+  const promesses = [] ;
+
+  sante.value.forEach(q => {
+    const valeur = reponses.value['sante-' + q.idQstGen];
+    if(valeur !== undefined) {
+      promesses.push(
+          axios.post('http://localhost:8080/api/reponses/ajout' ,{
+            idUser,
+            idQstGen: q.idQstGen,
+            valeur,
+          })
+      );
+    }
+  });
+
+  risque.value.forEach(q => {
+    const valeur = reponses.value['risque-' + q.idQstRisk];
+    if (valeur !== undefined) {
+      promesses.push(
+          axios.post('http://localhost:8080/api/reponses/ajout', {
+            idUser,
+            idQstRisk: q.idQstRisk,
+            valeur,
+          })
+      );
+    }
+  });
+
+  antecedents.value.forEach(q => {
+    const valeur = reponses.value['ant-' + q.idQstAntc];
+    if (valeur !== undefined) {
+      promesses.push(
+          axios.post('http://localhost:8080/api/reponses/ajout', {
+            idUser,
+            idQstAntc: q.idQstAntc,
+            valeur,
+          })
+
+      );
+    }
+  });
+
+  await Promise.all(promesses) ;
+
+  await axios.post("http://localhost:8080/api/incrsang/ajout", {
+    idUser: idUser
+  });
+
+  sessionStorage.setItem("popupTitre","Vos réponses ont été envoyées avec succès");
+  sessionStorage.setItem("popupMessage", "Merci pour votre contribution !");
+  await router.push('/');
+
+  }catch (error) {
+    console.error("Erreur lors de la soumission :" , error);
+    afficherPopup.value = true;
+    popupTitre.value = "Erreur" ;
+    popupMessage.value = "Une erreur lors de la soumission . Veuillez réessayer." ;
+  }
+};
 </script>
