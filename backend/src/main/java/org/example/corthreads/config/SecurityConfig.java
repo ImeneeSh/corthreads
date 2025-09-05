@@ -42,12 +42,12 @@ public class SecurityConfig {
                                 "/api/utilisateurs/**",
                                 "/api/posts/**",
                                 "/api/auth/**",
-                                "/api/questionnaires/**",
                                 "/error" ,
                                 "/api/qstgen",
                                 "/api/qstrisk",
                                 "/api/qstantc" ,
-                                "/api/reponses/**"
+                                "/api/reponses/**",
+                                "/api/incrsang/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
