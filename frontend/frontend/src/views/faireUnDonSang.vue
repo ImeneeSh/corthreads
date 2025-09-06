@@ -403,7 +403,7 @@ const soumettreRep = async () => {
 
   try {
   const dejaInscrit = await axios.get(`http://localhost:8080/api/reponses/${idUser}`) ;
-  if(dejaInscrit.data.lenght > 0) {
+  if(dejaInscrit.data.length > 0) {
     afficherPopup.value = true;
     popupTitre.value = "Déja inscrit";
     popupMessage.value = "Vous avez déjà rempli ce formulaire. Merci pour votre contribution" ;
