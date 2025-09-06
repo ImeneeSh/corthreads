@@ -318,6 +318,7 @@ const route = useRoute() ;
 idUser.value = route.params.idUser;
 const nom = ref('');
 const prenom = ref('');
+const idInscrSang = ref('');
 
 const selectedType = ref('sanguin');
 
@@ -368,6 +369,7 @@ onMounted(async () => {
 
   nom.value = route.params.nom ;
   prenom.value = route.params.prenom ;
+  idInscrSang.value = route.params.idInscrSang ;
 
   if(!idUser) {
     afficherPopup.value = true

@@ -93,7 +93,7 @@ const routes = [
         component: ListeDonneursPotentielSang
     },
     {
-        path: '/etudeFormulaire/:idUser/:prenom/:nom',
+        path: '/etudeFormulaire/:idUser/:prenom/:nom /:idInscrSang',
         name: 'EtudeFormulaire',
         component: etudeFormulaire
     }

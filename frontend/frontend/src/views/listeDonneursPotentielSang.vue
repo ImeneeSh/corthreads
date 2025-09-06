@@ -34,7 +34,7 @@
 
         <div class="btn-group">
 
-          <button class="btn-don btn-formulaire" @click="allerEtudeFormulaire(post.utilisateur.idUser, post.utilisateur.prenom , post.utilisateur.nom)">
+          <button class="btn-don btn-formulaire" @click="allerEtudeFormulaire(post.utilisateur.idUser, post.utilisateur.prenom , post.utilisateur.nom , post.idInscrSang)">
             <img src="@/assets/une-reponse-rapide.png" class="icon-don" alt="don icon">
             Etude du formulaire
           </button>
@@ -629,8 +629,8 @@ function confirmerSupp(index) {
   // logique de suppression ici
 }
 
-function allerEtudeFormulaire(idUser, prenom, nom) {
-  router.push({ name: 'EtudeFormulaire', params: { idUser, prenom, nom } });
+function allerEtudeFormulaire(idUser, prenom, nom ,idInscrSang) {
+  router.push({ name: 'EtudeFormulaire', params: { idUser, prenom, nom, idInscrSang} });
 }
 
 function afficherEtat(etat) {
