@@ -69,9 +69,9 @@
             </div>
           </div>
 
-          <button class="btn-don btn-attente">
-            <img src="@/assets/horloge-murale.png" class="icon-don" alt="don icon">
-            En attente
+          <button :class="classeBoutonEtat(post.etat)" class="btn-don">
+            <img :src="iconeEtat(post.etat)" class="icon-don" alt="don icon" />
+            {{ afficherEtat(post.etat) }}
           </button>
         </div>
       </div>
@@ -449,6 +449,19 @@ label {
   border: 2px solid #FF9900;
 }
 
+.btn-attente.valider {
+  background-color: white;
+  color: #05DF72;
+  border: 2px solid #05DF72;
+}
+
+.btn-attente.rejeter {
+  background-color: white;
+  color: #FF4242;
+  border: 2px solid #FF4242;
+}
+
+
 
 .icon-don {
   width: 16px ;
@@ -525,103 +538,116 @@ label {
   }
 }
 </style>
-<script setup lang="ts">
-
-import {ref, watch, computed, onMounted} from "vue";
+<script setup>
+import { ref, watch, computed, onMounted } from "vue";
 import { useRouter } from 'vue-router';
 import axios from "axios";
 
-function afficherValeur(val: any): string {
+import horlogeIcon from '@/assets/horloge-murale.png';
+import validerIcon from '@/assets/valider.png';
+import rejeterIcon from '@/assets/rejeter.png';
+
+function afficherValeur(val) {
   if (val === null || val === undefined) {
     return '/';
   } else if (typeof val === 'boolean') {
-    return val ? 'vrai' : 'faux' ;
+    return val ? 'vrai' : 'faux';
   } else {
-    return val ;
+    return val;
   }
 }
 
 const router = useRouter();
 
-const error = ref(null) ;
+const error = ref(null);
 
 const selectedType = ref('sanguin');
-const loading = ref(true) ;
+const loading = ref(true);
 const posts = ref([]);
 
-
 watch(selectedType, (newValue) => {
-
-  const currentRoute = router.currentRoute.value.path ;
-  let targetRoute = '' ;
+  const currentRoute = router.currentRoute.value.path;
+  let targetRoute = '';
 
   if (newValue === 'sanguin') {
     targetRoute = '/listeDonneursPotentielSang';
-  }
-
-  else if (newValue === 'foie') {
+  } else if (newValue === 'foie') {
     targetRoute = ''; //chemin
   }
 
-  if (targetRoute && currentRoute !== targetRoute ){
+  if (targetRoute && currentRoute !== targetRoute) {
     router.push(targetRoute);
-  } else if (targetRoute && currentRoute === targetRoute ){
+  } else if (targetRoute && currentRoute === targetRoute) {
     router.replace({ path: '/temp' }).then(() => {
       router.replace(targetRoute);
     });
   }
 });
 
-const visiblePosts = ref(4)
+const visiblePosts = ref(4);
+const emailVisible = ref(null);
+const indexSupp = ref(null);
 
-const emailVisible = ref(null)
-
-onMounted( async () => {
+onMounted(async () => {
   try {
-    const reponse = await axios.get('http://localhost:8080/api/incrsang')
-    posts.value = reponse.data
-  }catch (err) {
-    console.error('Erreur lors de la récupération des données',err)
-    error.value = "impossible de charger les appels à dons."
-  }finally {
-    loading.value = false
+    const reponse = await axios.get('http://localhost:8080/api/incrsang');
+    posts.value = reponse.data;
+  } catch (err) {
+    console.error('Erreur lors de la récupération des données', err);
+    error.value = "impossible de charger les appels à dons.";
+  } finally {
+    loading.value = false;
   }
-})
+});
 
 const postsAffiches = computed(() => {
-  return posts.value.slice(0, visiblePosts.value)
-})
-
-const indexSupp = ref<number | null>(null)
+  return posts.value.slice(0, visiblePosts.value);
+});
 
 function voirPlus() {
-  visiblePosts.value += 4
+  visiblePosts.value += 4;
 }
 
-function gererEmail(index: number) {
-  emailVisible.value = emailVisible.value === index ? null : index ;
+function gererEmail(index) {
+  emailVisible.value = emailVisible.value === index ? null : index;
 }
 
-function copierEmail(email: string) {
+function copierEmail(email) {
   navigator.clipboard.writeText(email);
 }
 
-function afficherSupp(index: number){
+function afficherSupp(index) {
   indexSupp.value = index;
 }
 
-function annulerSupp(){
-  indexSupp.value = null ;
+function annulerSupp() {
+  indexSupp.value = null;
 }
 
-function confirmerSupp(index: number) {
-  indexSupp.value = null ;
-  // logique de suppression
+function confirmerSupp(index) {
+  indexSupp.value = null;
+  // logique de suppression ici
 }
 
-function allerEtudeFormulaire(idUser, prenom , nom) {
+function allerEtudeFormulaire(idUser, prenom, nom) {
   router.push({ name: 'EtudeFormulaire', params: { idUser, prenom, nom } });
 }
 
+function afficherEtat(etat) {
+  if (etat === 'En_attente') return 'En attente';
+  return etat;
+}
+
+function classeBoutonEtat(etat) {
+  if (etat === 'Valider') return 'btn-attente valider';
+  if (etat === 'Rejeter') return 'btn-attente rejeter';
+  return 'btn-attente';
+}
+
+function iconeEtat(etat) {
+  if (etat === 'Valider') return validerIcon;
+  if (etat === 'Rejeter') return rejeterIcon;
+  return horlogeIcon;
+}
 </script>
 
