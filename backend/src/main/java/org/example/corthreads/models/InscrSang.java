@@ -20,4 +20,9 @@ public class InscrSang {
     @JoinColumn(name = "idUser" , referencedColumnName = "idUser" , insertable = false , updatable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Utilisateur utilisateur;
+
+    @Column(name = "etat")
+    @Enumerated(EnumType.STRING)
+    private Etat etat = Etat.En_attente;
+
 }

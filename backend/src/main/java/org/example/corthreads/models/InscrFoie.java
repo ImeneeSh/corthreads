@@ -25,4 +25,9 @@ public class InscrFoie {
 
     @Column (name = "dateVisiteProgrammer")
     private LocalDate dateVisiteProgrammer;
+
+    @Column(name = "etat")
+    @Enumerated(EnumType.STRING)
+    private Etat etat = Etat.En_attente;
+
 }
