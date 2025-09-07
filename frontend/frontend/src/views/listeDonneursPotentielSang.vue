@@ -538,7 +538,7 @@ label {
   }
 }
 </style>
-<script setup>
+<script setup lang="ts">
 import { ref, watch, computed, onMounted } from "vue";
 import { useRouter } from 'vue-router';
 import axios from "axios";
@@ -624,9 +624,18 @@ function annulerSupp() {
   indexSupp.value = null;
 }
 
-function confirmerSupp(index) {
-  indexSupp.value = null;
-  // logique de suppression ici
+async function confirmerSupp(index: number) {
+  const post = postsAffiches.value[index];
+
+  try {
+    await axios.delete(`http://localhost:8080/api/listesang/suppression/1${post.idInscrSang}`);
+
+    posts.value = posts.value.filter(p => p.idPost !== post.idPost);
+
+    indexSupp.value = null;
+  } catch (error) {
+    console.error('Erreur lors de la suppression', error);
+  }
 }
 
 function allerEtudeFormulaire(idUser, prenom, nom ,idInscrSang) {
