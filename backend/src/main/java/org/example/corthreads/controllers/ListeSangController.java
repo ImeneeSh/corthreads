@@ -2,6 +2,7 @@ package org.example.corthreads.controllers;
 
 import org.example.corthreads.models.ListeSang;
 import org.example.corthreads.services.ListeSangService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +25,11 @@ public class ListeSangController {
     @GetMapping
     public List<ListeSang> getAllListeSang() {
         return listeSangService.getAllListeSang() ;
+    }
+
+    @DeleteMapping("/suppression/{idListeSang}")
+    public ResponseEntity<String> supprimerListeSang(@PathVariable int idListeSang) {
+        listeSangService.supprimerListeSangId(idListeSang);
+        return ResponseEntity.ok("Post supprimé avec succès !");
     }
 }

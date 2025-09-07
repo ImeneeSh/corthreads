@@ -22,4 +22,11 @@ public class ListeFoieService {
     public ListeFoie ajoutListeFoie(ListeFoie listeFoie) {
         return listeFoieRepository.save(listeFoie);
     }
+
+    public void supprimerListeFoieId(int idListeFoie) {
+        if(!listeFoieRepository.existsById(idListeFoie)){
+            throw new IllegalArgumentException("Ce post de sang n'existe pas");
+        }
+        listeFoieRepository.deleteById(idListeFoie);
+    }
 }

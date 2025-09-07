@@ -22,4 +22,11 @@ public class ListeSangService {
     public ListeSang ajoutListeSang(ListeSang listeSang) {
         return listeSangRepository.save(listeSang);
     }
+
+    public void supprimerListeSangId(int idListeSang) {
+        if(!listeSangRepository.existsById(idListeSang)){
+            throw new IllegalArgumentException("Ce post de sang n'existe pas");
+        }
+        listeSangRepository.deleteById(idListeSang);
+    }
 }

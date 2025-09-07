@@ -22,4 +22,11 @@ public class ListeOrganeService {
     public ListeOrgane ajoutListeOrgane(ListeOrgane listeOrgane) {
         return listeOrganeRepository.save(listeOrgane);
     }
+
+    public void supprimerListeOrganeId(int idListeOrgane) {
+        if(!listeOrganeRepository.existsById(idListeOrgane)){
+            throw new IllegalArgumentException("Ce post de sang n'existe pas");
+        }
+        listeOrganeRepository.deleteById(idListeOrgane);
+    }
 }
