@@ -628,7 +628,7 @@ async function confirmerSupp(index: number) {
   const post = postsAffiches.value[index];
 
   try {
-    await axios.delete(`http://localhost:8080/api/listesang/suppression/1${post.idInscrSang}`);
+    await axios.delete(`http://localhost:8080/api/incrsang/suppression/1${post.idInscrSang}`);
 
     posts.value = posts.value.filter(p => p.idPost !== post.idPost);
 
