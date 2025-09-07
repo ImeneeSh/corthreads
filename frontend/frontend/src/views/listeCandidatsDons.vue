@@ -78,7 +78,7 @@
             </button>
 
             <div v-if="indexSupp === index" class="boite-confirmation" @click.stop >
-              <p class="question-confirmation">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+              <p class="question-confirmation">Êtes-vous sûr de vouloir supprimer cet appel à dons ?</p>
               <div class="boutons-confirmation">
                 <button class="btn-don btn-supprimer" @click="confirmerSupp(index)">Confirmer</button>
                 <button class="btn-don btn-annuler" @click="annulerSupp">Annuler</button>
@@ -638,9 +638,19 @@ function annulerSupp(){
   indexSupp.value = null ;
 }
 
-function confirmerSupp(index: number) {
-  indexSupp.value = null ;
-  // logique de suppression
+async function confirmerSupp(index: number) {
+  const post = postsAffiches.value[index];
+
+  try {
+    await axios.delete(`http://localhost:8080/api/posts/suppression/${post.idPost}`);
+
+    posts.value = posts.value.filter(p => p.idPost !== post.idPost);
+
+    indexSupp.value = null;
+  } catch (error) {
+    console.error('Erreur lors de la suppression', error);
+  }
 }
+
 
 </script>
