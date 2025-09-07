@@ -28,15 +28,16 @@
           <p><strong>Groupe Sanguin :</strong> {{ afficherValeur(post.utilisateur.groupeSang) }}</p>
           <p><strong>Rhesus :</strong> {{ afficherValeur(post.utilisateur.rh) }}</p>
           <p><strong>Wilaya :</strong> {{ afficherValeur(post.utilisateur.wilaya) }}</p>
-          <p><strong>Est donneur de sang :</strong> {{ afficherValeur(post.utilisateur.estDonneurSang) }}</p>
-          <p><strong>Date du dernier don de sang :</strong> {{ afficherValeur(post.utilisateur.dernierDonSang) }}</p>
+          <p><strong>Est donneur de foie :</strong> {{ afficherValeur(post.utilisateur.estDonneurFoie) }}</p>
+          <p><strong>A déja fait un don de foie :</strong> {{ afficherValeur(post.utilisateur.aDonneFoie) }}</p>
+          <p><strong>Date de la visite programmer :</strong> {{ afficherValeur(post.dateVisiteProgrammer) }}</p>
         </div>
 
         <div class="btn-group">
 
-          <button class="btn-don btn-formulaire" @click="allerEtudeFormulaire(post.utilisateur.idUser, post.utilisateur.prenom , post.utilisateur.nom , post.idInscrSang)">
+          <button class="btn-don btn-formulaire" @click="">
             <img src="@/assets/une-reponse-rapide.png" class="icon-don" alt="don icon">
-            Etude du formulaire
+            Enregistrer
           </button>
 
           <div class="btn-email-wrapper">
@@ -54,29 +55,24 @@
             </div>
           </div>
 
-          <div class="btn-email-wrapper">
-            <button class="btn-don btn-supprimer" @click="afficherSupp(index)">
-              <img src="@/assets/supprimer%20(1).png" class="icon-don" alt="don icon">
-              Supprimer
+            <button class="btn-don btn-valider"  @click="validerDon(post.utilisateur.idUser , post.idInscrFoie)">
+              <img src="@/assets/verifier.png" alt="valider" class="icon" />
+              Valider
             </button>
 
-            <div v-if="indexSupp === index" class="boite-confirmation" @click.stop >
-              <p class="question-confirmation">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
-              <div class="boutons-confirmation">
-                <button class="btn-don btn-supprimer" @click="confirmerSupp(index)">Confirmer</button>
-                <button class="btn-don btn-annuler" @click="annulerSupp">Annuler</button>
-              </div>
-            </div>
-          </div>
+            <button class="btn-don btn-rejeter"  @click="rejeterDon(post.idInscrFoie)">
+              <img src="@/assets/effacer.png" alt="rejeter" class="icon" />
+              Rejeter
+            </button>
 
-          <button :class="classeBoutonEtat(post.etat)" class="btn-don">
-            <img :src="iconeEtat(post.etat)" class="icon-don" alt="don icon" />
-            {{ afficherEtat(post.etat) }}
-          </button>
+            <button :class="classeBoutonEtat(post.etat)" class="btn-don attente">
+              <img :src="iconeEtat(post.etat)" class="icon-don" alt="don icon" />
+              {{ afficherEtat(post.etat) }}
+            </button>
+        </div>
+
         </div>
       </div>
-    </div>
-
     <button class="voir-plus" @click="voirPlus" v-if="visiblePosts <= posts.length">
       Voir plus
       <img src="@/assets/fleche-droite.png" class="icon-fleche" alt="flèche" >
@@ -281,6 +277,10 @@ label {
   height: 30px ;
 }
 
+.attente {
+  cursor : default !important;
+}
+
 .infos {
   display: flex ;
   flex-wrap: wrap;
@@ -300,13 +300,16 @@ label {
 }
 
 .btn-group {
-  display: flex ;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
   justify-content: flex-end;
-  gap: 16px ;
-  margin-top: 26px ;
 }
 
 .btn-don {
+  color: white ;
   padding: 8px 18px ;
   border-radius: 20px;
   font-weight: bold;
@@ -316,8 +319,8 @@ label {
   border: none ;
   font-size: 14px ;
   transition: all 0.3s ease;
-  margin-left: 0;
-  margin-top: 0;
+  margin: 0 !important;
+  cursor: pointer ;
 }
 
 .btn-email-wrapper {
@@ -400,49 +403,6 @@ label {
   opacity: 0.7;
 }
 
-.btn-supprimer {
-  background-color: #FF4242;
-  color: white;
-  border: none ;
-  cursor: pointer;
-}
-
-.boite-confirmation {
-  position: absolute ;
-  top: auto ;
-  bottom: 110% ;
-  right: 0 ;
-  background-color: white;
-  border: 1px solid #D0D0D0;
-  border-radius: 12px;
-  padding: 16px ;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  max-width: 320px ;
-  z-index: 100 ;
-  animation: fadeIn 0.3s ease-in-out;
-  text-align: center;
-}
-
-.question-confirmation {
-  font-weight: bold;
-  margin-bottom: 12px ;
-  color: #103056;
-  font-size: 14px;
-}
-
-.boutons-confirmation {
-  display: flex ;
-  justify-content: space-between;
-  gap: 10px ;
-}
-
-.btn-annuler {
-  background-color: white;
-  color: #103056;
-  border: 2px solid #ccc ;
-  cursor: pointer ;
-}
-
 .btn-attente {
   background-color: white;
   color: #FF9900;
@@ -461,7 +421,19 @@ label {
   border: 2px solid #FF4242;
 }
 
+.icon {
+  width: 16px ;
+  height: 16px ;
+}
 
+
+.btn-valider {
+  background-color: #05DF72;
+}
+
+.btn-rejeter {
+  background-color: #FF4242;
+}
 
 .icon-don {
   width: 16px ;
@@ -536,6 +508,7 @@ label {
     width: 16px ;
     height: 16px ;
   }
+
 }
 </style>
 <script setup>
@@ -561,7 +534,7 @@ const router = useRouter();
 
 const error = ref(null);
 
-const selectedType = ref('sanguin');
+const selectedType = ref('foie');
 const loading = ref(true);
 const posts = ref([]);
 
@@ -575,7 +548,7 @@ watch(selectedType, (newValue) => {
     targetRoute = '/listeDonneursPotentielFoie';
   }
 
-  if (targetRoute && currentRoute !== targetRoute) {
+  if (targetRoute !== currentRoute) {
     router.push(targetRoute);
   } else if (targetRoute && currentRoute === targetRoute) {
     router.replace({ path: '/temp' }).then(() => {
@@ -586,11 +559,12 @@ watch(selectedType, (newValue) => {
 
 const visiblePosts = ref(4);
 const emailVisible = ref(null);
-const indexSupp = ref(null);
+
+
 
 onMounted(async () => {
   try {
-    const reponse = await axios.get('http://localhost:8080/api/incrsang');
+    const reponse = await axios.get('http://localhost:8080/api/incrfoie');
     posts.value = reponse.data;
   } catch (err) {
     console.error('Erreur lors de la récupération des données', err);
@@ -616,31 +590,6 @@ function copierEmail(email) {
   navigator.clipboard.writeText(email);
 }
 
-function afficherSupp(index) {
-  indexSupp.value = index;
-}
-
-function annulerSupp() {
-  indexSupp.value = null;
-}
-
-async function confirmerSupp(index) {
-  const post = postsAffiches.value[index];
-
-  try {
-    await axios.delete(`http://localhost:8080/api/incrsang/suppression/1${post.idInscrSang}`);
-
-    posts.value = posts.value.filter(p => p.idPost !== post.idPost);
-
-    indexSupp.value = null;
-  } catch (error) {
-    console.error('Erreur lors de la suppression', error);
-  }
-}
-
-function allerEtudeFormulaire(idUser, prenom, nom ,idInscrSang) {
-  router.push({ name: 'EtudeFormulaire', params: { idUser, prenom, nom, idInscrSang} });
-}
 
 function afficherEtat(etat) {
   if (etat === 'En_attente') return 'En attente';
@@ -658,5 +607,29 @@ function iconeEtat(etat) {
   if (etat === 'Rejeter') return rejeterIcon;
   return horlogeIcon;
 }
+
+const validerDon = async (idUser, idInscrFoie) => {
+  try {
+    await axios.post("http://localhost:8080/api/listefoie/ajout", {
+      idUser,
+      idInscrFoie,
+    });
+
+    await axios.put(`http://localhost:8080/api/incrfoie/modifier/${idInscrFoie}?etat=Valider`);
+    await router.push('/ListeDonneursPotentielFoie');
+  }catch(error) {
+    console.error("Erreur lors de la validation:" ,error);
+  }
+};
+
+const rejeterDon = async (idInscrFoie) => {
+  try {
+    await axios.put(`http://localhost:8080/api/incrfoie/modifier/${idInscrFoie}?etat=Rejeter`);
+
+    await router.push('/ListeDonneursPotentielFoie');
+  } catch (error) {
+    console.error("Erreur lors du rejet :", error);
+  }
+};
 </script>
 

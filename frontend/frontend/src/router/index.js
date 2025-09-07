@@ -15,6 +15,7 @@ import faireDonFoie from '@/views/faireUnDonFoie.vue'
 import listeCandidatsDons from '@/views/listeCandidatsDons.vue'
 import ListeDonneursPotentielSang from '@/views/listeDonneursPotentielSang.vue'
 import etudeFormulaire from '@/views/etudeFormulaire.vue'
+import ListeDonneursPotentielFoie from "@/views/listeDonneursPotentielFoie.vue";
 
 const routes = [
     {
@@ -96,6 +97,11 @@ const routes = [
         path: '/etudeFormulaire/:idUser/:prenom/:nom /:idInscrSang',
         name: 'EtudeFormulaire',
         component: etudeFormulaire
+    },
+    {
+        path: '/ListeDonneursPotentielFoie',
+        name: 'ListeDonneursPotentielFoie',
+        component: ListeDonneursPotentielFoie
     }
 ]
 
