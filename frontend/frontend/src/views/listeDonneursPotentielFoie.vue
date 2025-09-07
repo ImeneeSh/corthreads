@@ -30,12 +30,12 @@
           <p><strong>Wilaya :</strong> {{ afficherValeur(post.utilisateur.wilaya) }}</p>
           <p><strong>Est donneur de foie :</strong> {{ afficherValeur(post.utilisateur.estDonneurFoie) }}</p>
           <p><strong>A déja fait un don de foie :</strong> {{ afficherValeur(post.utilisateur.aDonneFoie) }}</p>
-          <p><strong>Date de la visite programmer :</strong> {{ afficherValeur(post.dateVisiteProgrammer) }}</p>
+          <p class="champ-date-programmee"><label for="date-visite" class="label-date">Date de la visite programmée :</label><input type="date" v-model="post.nouvelleDate" class="input-date" id="date-visite"/></p>
         </div>
 
         <div class="btn-group">
 
-          <button class="btn-don btn-formulaire" @click="">
+          <button class="btn-don btn-formulaire" @click="enregistrerDate(post.idInscrFoie, post.nouvelleDate)">
             <img src="@/assets/une-reponse-rapide.png" class="icon-don" alt="don icon">
             Enregistrer
           </button>
@@ -392,6 +392,41 @@ label {
   border-color: #FA6E89;
 }
 
+.champ-date-programmee {
+  display: flex ;
+  align-items: center;
+  gap: 10px ;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.label-date {
+  font-weight: bold;
+  color: #103056;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.input-date {
+  padding: 6px 12px;
+  border: 2px solid #FA6E89;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+  color: #103056;
+  background-color: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-date:focus {
+  outline: none;
+  border-color: #103056;
+  box-shadow: 0 0 0 2px rgba(250, 110, 137, 0.2);
+}
+
 .copy-icon {
   width: 20px ;
   height: 20px ;
@@ -509,6 +544,19 @@ label {
     height: 16px ;
   }
 
+  .champ-date-programmee {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .label-date {
+    font-size: 13px;
+  }
+
+  .input-date {
+    width: 100%;
+  }
+
 }
 </style>
 <script setup>
@@ -565,7 +613,11 @@ const emailVisible = ref(null);
 onMounted(async () => {
   try {
     const reponse = await axios.get('http://localhost:8080/api/incrfoie');
-    posts.value = reponse.data;
+    posts.value = reponse.data.map(post => ({
+      ...post,
+      nouvelleDate: post.dateVisiteProgrammer ? post.dateVisiteProgrammer.slice(0,10) : ''
+    }));
+
   } catch (err) {
     console.error('Erreur lors de la récupération des données', err);
     error.value = "impossible de charger les appels à dons.";
@@ -629,6 +681,22 @@ const rejeterDon = async (idInscrFoie) => {
     await router.push('/ListeDonneursPotentielFoie');
   } catch (error) {
     console.error("Erreur lors du rejet :", error);
+  }
+};
+
+const enregistrerDate = async (idInscrFoie, nouvelleDate) => {
+  try {
+    if(!nouvelleDate) {
+      alert("Veuillez modifier la date de la visite programmer d'abord !");
+      return ;
+    }
+
+    await axios.put(`http://localhost:8080/api/incrfoie/modifier/${idInscrFoie}?date=${nouvelleDate}`);
+    alert("Date mise à jour avec succès !");
+    post.dateVisiteProgrammer = nouvelleDate;
+
+  } catch(error){
+    console.error("Erreur lors de la maj de la date :", error);
   }
 };
 </script>
