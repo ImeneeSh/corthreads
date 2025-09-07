@@ -45,12 +45,12 @@
       </div>
 
       <div class="btns">
-        <button class="btn-submit btn-valider"  @click="">
+        <button class="btn-submit btn-valider"  @click="validerDon">
           <img src="@/assets/verifier.png" alt="valider" class="icon" />
           Valider
         </button>
 
-        <button class="btn-submit btn-rejeter"  @click="">
+        <button class="btn-submit btn-rejeter"  @click="rejeterDon">
           <img src="@/assets/effacer.png" alt="rejeter" class="icon" />
           Rejeter
         </button>
@@ -420,5 +420,29 @@ onMounted(async () => {
   }
 
 });
+
+const validerDon = async () => {
+  try {
+    await axios.post("http://localhost:8080/api/listesang/ajout", {
+      idUser: idUser.value,
+      idInscrSang: idInscrSang.value,
+    });
+
+    await axios.put(`http://localhost:8080/api/incrsang/modifier/${idInscrSang.value}?etat=Valider`);
+    await router.push('/ListeDonneursPotentielSang');
+  }catch(error) {
+    console.error("Erreur lors de la validation:" ,error);
+  }
+};
+
+const rejeterDon = async () => {
+  try {
+    await axios.put(`http://localhost:8080/api/incrsang/modifier/${idInscrSang.value}?etat=Rejeter`);
+
+    await router.push('/ListeDonneursPotentielSang');
+  } catch (error) {
+    console.error("Erreur lors du rejet :", error);
+  }
+};
 
 </script>
