@@ -1,13 +1,11 @@
 package org.example.corthreads.services;
 
-import org.example.corthreads.models.GroupeSang;
-import org.example.corthreads.models.Utilisateur ;
-import org.example.corthreads.models.Role ;
-import org.example.corthreads.models.Genre ;
+import org.example.corthreads.models.*;
 import org.example.corthreads.repositories.UtilisateurRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -55,6 +53,72 @@ public class UtilisateurService {
         } else {
             return utilisateurRepository.findAll();
         }
+    }
+
+    public Utilisateur modifierUtilisateurId(String idUser, String nom, String prenom, String wilaya, LocalDate dateNaissance, Genre genre, String mdp, GroupeSang groupeSang, Rh rh, String specialite, String etablissement,Boolean donneurOrgane, Boolean donneurFoie,Boolean donneurSang, LocalDate dernierDonSang,LocalDate dateDerniereModification){
+        Utilisateur utilisateur =utilisateurRepository.findById(idUser).orElseThrow(() -> new IllegalArgumentException("Le utilisateur n'existe pas"));
+
+        if(nom != null){
+            utilisateur.setNom(nom);
+        }
+
+        if(prenom != null){
+            utilisateur.setPrenom(prenom);
+        }
+
+        if(wilaya != null){
+            utilisateur.setWilaya(wilaya);
+        }
+
+        if(genre != null){
+            utilisateur.setGenre(genre);
+        }
+
+        if(mdp != null){
+            utilisateur.setMdp(passwordEncoder.encode(mdp));
+        }
+
+        if(dateNaissance != null){
+            utilisateur.setDateNaissance(dateNaissance);
+        }
+
+        if(groupeSang != null){
+            utilisateur.setGroupeSang(groupeSang);
+        }
+
+        if(rh != null){
+            utilisateur.setRh(rh);
+        }
+
+        if(specialite != null){
+            utilisateur.setSpecialite(specialite);
+        }
+
+        if(etablissement != null){
+            utilisateur.setEtablissement(etablissement);
+        }
+
+        if(donneurOrgane != null){
+            utilisateur.setDonneurOrgane(donneurOrgane);
+        }
+
+        if(donneurFoie != null){
+            utilisateur.setDonneurFoie(donneurFoie);
+        }
+
+        if(donneurSang != null){
+            utilisateur.setDonneurSang(donneurSang);
+        }
+
+        if(dernierDonSang != null){
+            utilisateur.setDernierDonSang(dernierDonSang);
+        }
+
+        if(dateDerniereModification != null){
+            utilisateur.setDateDerniereModification(dateDerniereModification);
+        }
+
+        return  utilisateurRepository.save(utilisateur);
     }
 
 }

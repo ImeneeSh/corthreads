@@ -57,14 +57,11 @@ public class Utilisateur {
     @Column(name = "estDonneurSang")
     private boolean donneurSang ;
 
-    @Column(name = "dateValidationDon")
-    private LocalDate dateValidationDon;
+    @Column(name = "dateDerniereModification")
+    private LocalDate dateDerniereModification;
 
     @Column(name = "dernierDonSang")
     private LocalDate dernierDonSang;
-
-    @Column(name = "aDonneFoie")
-    private boolean aDonneFoie;
 
 }
 
