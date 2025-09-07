@@ -1,7 +1,9 @@
 package org.example.corthreads.controllers;
 
 import org.example.corthreads.models.*;
+import org.example.corthreads.repositories.ReponseRepository;
 import org.example.corthreads.services.PostService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -33,5 +35,11 @@ public class PostController {
             @RequestParam(required = false) LocalDate datePublication) {
 
         return postService.rechercherPost(utilisateurCritere,typePost,typeDon,groupSang,urgence,wilaya,datePublication);
+    }
+
+    @DeleteMapping("/suppression/{idPost}")
+    public ResponseEntity<String> supprimerPost(@PathVariable String idPost) {
+        postService.supprimerPostId(idPost);
+        return ResponseEntity.ok("Post supprimé avec succès !");
     }
 }

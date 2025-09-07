@@ -55,4 +55,11 @@ public class PostService {
                 wilaya,
                 datePublication);
     }
+
+    public void supprimerPostId(String idPost) {
+        if(!postRepository.existsById(idPost)){
+            throw new IllegalArgumentException("Le post n'existe pas");
+        }
+        postRepository.deleteById(idPost);
+    }
 }
