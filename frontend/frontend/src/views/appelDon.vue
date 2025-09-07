@@ -54,7 +54,7 @@
           <p><strong>Date :</strong> {{ post.datePublication }}</p>
         </div>
 
-        <button class="btn-don">
+        <button class="btn-don" @click="diriger">
           <img src="@/assets/faire-un-don.png" class="icon-don" alt="don icon">
           Faire un don
         </button>
@@ -365,6 +365,9 @@
 
 import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const posts = ref([])
 const visiblePosts = ref(4)
@@ -435,5 +438,9 @@ async function appliquerFiltres() {
   } finally {
     loading.value = false
   }
+}
+
+function diriger() {
+  router.push('/faireDonSang');
 }
 </script>
