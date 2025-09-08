@@ -16,6 +16,7 @@ import listeCandidatsDons from '@/views/listeCandidatsDons.vue'
 import ListeDonneursPotentielSang from '@/views/listeDonneursPotentielSang.vue'
 import etudeFormulaire from '@/views/etudeFormulaire.vue'
 import ListeDonneursPotentielFoie from "@/views/listeDonneursPotentielFoie.vue";
+import ListeDonneursValidesSang from "@/views/listeDonneursValidésSang.vue"
 
 const routes = [
     {
@@ -102,6 +103,11 @@ const routes = [
         path: '/ListeDonneursPotentielFoie',
         name: 'ListeDonneursPotentielFoie',
         component: ListeDonneursPotentielFoie
+    },
+    {
+        path: '/ListeDonneursValidesSang' ,
+        name: 'ListeDonneursValidesSang' ,
+        component: ListeDonneursValidesSang
     }
 ]
 

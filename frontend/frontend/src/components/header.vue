@@ -79,7 +79,7 @@
       <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/' }">Accueil</router-link></li>
       <li><router-link to="/listeCandidatsDons" class="menu-link" :class="{ active: route.path === '/candidats-au-don' }">Liste des candidats au don</router-link></li>
       <li><router-link to="/listeDonneursPotentielSang" class="menu-link" :class="{ active: route.path === '/donneurs-potentiels' }">Listes des donneurs potentiels</router-link></li>
-      <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/donneurs-valides' }">Listes des donneurs validés</router-link></li>
+      <li><router-link to="/ListeDonneursValidesSang" class="menu-link" :class="{ active: route.path === '/donneurs-valides' }">Listes des donneurs validés</router-link></li>
     </ul>
 
 
