@@ -67,19 +67,19 @@
     </div>
     <ul class="menu-links" v-if="!estConnecter || role === 'Citoyen'">
       <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/' }">Accueil</router-link></li>
-      <li class="mobile-only"><router-link to="/temoignage" class="menu-link" :class="{ active: route.path === '/temoignages' }">Témoignages</router-link></li>
-      <li class="mobile-only"><router-link to="/appelDon" class="menu-link" :class="{ active: route.path === '/appels-a-dons' }">Appels à dons</router-link></li>
-      <li><router-link to="/faireDonSang" class="menu-link" :class="{ active: route.path === '/faire-un-don' }">Faire un don</router-link></li>
-      <li><router-link to="/partagerAppel" class="menu-link" :class="{ active: route.path === '/appel-a-dons' }">Faire un appel à dons</router-link></li>
-      <li><router-link to="/partagerTemoignage" class="menu-link" :class="{ active: route.path === '/partager-temoignage' }">Partager un témoignage</router-link></li>
+      <li class="mobile-only"><router-link to="/temoignage" class="menu-link" :class="{ active: route.path === '/temoignage' }">Témoignages</router-link></li>
+      <li class="mobile-only"><router-link to="/appelDon" class="menu-link" :class="{ active: route.path === '/appelDon' }">Appels à dons</router-link></li>
+      <li><router-link to="/faireDonSang" class="menu-link" :class="{ active: route.path === '/faireDonSang' }">Faire un don</router-link></li>
+      <li><router-link to="/partagerAppel" class="menu-link" :class="{ active: route.path === '/partagerAppel' }">Faire un appel à dons</router-link></li>
+      <li><router-link to="/partagerTemoignage" class="menu-link" :class="{ active: route.path === '/partagerTemoignage' }">Partager un témoignage</router-link></li>
     </ul>
 
 
     <ul class="menu-links" v-if="role === 'Medecin'">
       <li><router-link to="/" class="menu-link" :class="{ active: route.path === '/' }">Accueil</router-link></li>
-      <li><router-link to="/listeCandidatsDons" class="menu-link" :class="{ active: route.path === '/candidats-au-don' }">Liste des candidats au don</router-link></li>
-      <li><router-link to="/listeDonneursPotentielSang" class="menu-link" :class="{ active: route.path === '/donneurs-potentiels' }">Listes des donneurs potentiels</router-link></li>
-      <li><router-link to="/ListeDonneursValidesSang" class="menu-link" :class="{ active: route.path === '/donneurs-valides' }">Listes des donneurs validés</router-link></li>
+      <li><router-link to="/listeCandidatsDons" class="menu-link" :class="{ active: route.path === '/listeCandidatsDons' }">Liste des candidats au don</router-link></li>
+      <li><router-link to="/listeDonneursPotentielSang" class="menu-link" :class="{ active: route.path === '/listeDonneursPotentielSang' }">Listes des donneurs potentiels</router-link></li>
+      <li><router-link to="/ListeDonneursValidesSang" class="menu-link" :class="{ active: route.path === '/ListeDonneursValidesSang' }">Listes des donneurs validés</router-link></li>
     </ul>
 
 

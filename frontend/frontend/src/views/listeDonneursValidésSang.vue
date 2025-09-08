@@ -459,6 +459,7 @@ label {
   background-color: white;
   color: #05DF72;
   border: 2px solid #05DF72;
+  cursor: default !important;
 }
 
 .voir-plus:hover {
