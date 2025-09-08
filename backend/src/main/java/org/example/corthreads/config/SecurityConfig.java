@@ -51,7 +51,8 @@ public class SecurityConfig {
                                 "/api/incrfoie/**" ,
                                 "/api/listeorgane/**" ,
                                 "/api/listesang/**",
-                                "/api/listefoie/**"
+                                "/api/listefoie/**",
+                                "/api/contacter/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
