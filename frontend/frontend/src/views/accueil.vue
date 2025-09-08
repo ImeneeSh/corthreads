@@ -13,7 +13,7 @@
         <p class="hero-subtitle">
           Témoignez , partager et préservez <br /> les liens du don
         </p>
-        <button class="cta-button premier">
+        <button class="cta-button premier" @click="premier">
           Découvrir plus
         <img src="@/assets/fleche-droite.png" alt="flèche" class="fleche-icon" />
         </button>
@@ -21,7 +21,7 @@
     </section>
 
     <!-- section témoigange -->
-  <section class="section-temoignage" data-aos="fade-up">
+  <section class="section-temoignage" data-aos="fade-up" ref="temoignageSection">
     <h2>Découvrez des témoignages touchants</h2>
     <div class="temoignage-content">
       <img src="@/assets/papotage.png" alt="illustration témoignage" />
@@ -32,8 +32,8 @@
         <cite>— Anne-Sophie, mère de Lucas 8 ans</cite>
       </blockquote>
     </div>
-    <button class="cta-button deuxieme">
-      <router-link to="/temoignage" class="link">Découvrir plus</router-link>
+    <button class="cta-button deuxieme" @click="deuxieme">
+      Découvrir plus
       <img src="@/assets/fleche-droite.png" alt="flèche" class="fleche-icon" />
     </button>
   </section>
@@ -44,8 +44,8 @@
         <h2>Faites des appels à <br/> dons et sauvez des <br/> vies !</h2>
         <img src="@/assets/talking.png" alt="illustration appel à dons" />
       </div>
-      <button class="cta-button troisieme">
-        <router-link to="/appelDon" class="link">Découvrir plus</router-link>
+      <button class="cta-button troisieme" @click="troisieme">
+        Découvrir plus
         <img src="@/assets/fleche-droite.png" alt="flèche" class="fleche-icon" />
       </button>
     </section>
@@ -113,13 +113,8 @@
   font-weight: bold;
   cursor: pointer;
   font-size: 14px;
+  font-weight: bold;
   transition: background-color 0.3s ease;
-}
-
-.link {
-  color: inherit;
-  text-decoration: none;
-  font: inherit;
 }
 
 .cta-button.premier {
@@ -345,6 +340,8 @@ const showPopup = ref(false);
 const popupTitre = ref('');
 const popupMessage = ref('');
 
+const temoignageSection = ref(null);
+
 const popupTitreStorage = sessionStorage.getItem('popupTitre');
 const popupMessageStorage = sessionStorage.getItem('popupMessage');
 
@@ -388,6 +385,20 @@ onMounted(() => {
 
 function closePopup(){
   showPopup.value = false;
+}
+
+function premier() {
+  if (temoignageSection.value) {
+    temoignageSection.value.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function deuxieme(){
+  router.push('/temoignage');
+}
+
+function troisieme(){
+  router.push('/appelDon');
 }
 </script>
 
