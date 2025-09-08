@@ -41,7 +41,7 @@
         </button>
 
         <div v-if="menuUtil" class="user-dropdown">
-          <div class="user-option" @click="router.push('/')"> <!-- après push dans la page des paramètres -->
+          <div class="user-option" @click="router.push('/parametres')">
             <img src="@/assets/parametres-cog.png" alt="Paramètres" />
             <span class="parametres-text">{{ t('parametres') }}</span>
           </div>

@@ -19,6 +19,7 @@ import ListeDonneursPotentielFoie from "@/views/listeDonneursPotentielFoie.vue"
 import ListeDonneursValidesSang from "@/views/listeDonneursValidésSang.vue"
 import ListeDonneursValidesFoie from "@/views/listeDonneursValidésFoie.vue"
 import ListeDonneursValidesOrgane from "@/views/listeDonneursValidésOrgane.vue"
+import parametres from "@/views/parametres.vue"
 
 const routes = [
     {
@@ -121,6 +122,11 @@ const routes = [
         name: 'ListeDonneursValidesOrgane' ,
         component : ListeDonneursValidesOrgane
     },
+    {
+        path: '/parametres' ,
+        name : 'parametres',
+        component: parametres
+    }
 ]
 
 const router = createRouter({
