@@ -28,8 +28,7 @@
           <p><strong>Groupe Sanguin :</strong> {{ afficherValeur(post.utilisateur.groupeSang) }}</p>
           <p><strong>Rhesus :</strong> {{ afficherValeur(post.utilisateur.rh) }}</p>
           <p><strong>Wilaya :</strong> {{ afficherValeur(post.utilisateur.wilaya) }}</p>
-          <p><strong>Est donneur de foie :</strong> {{ afficherValeur(post.utilisateur.estDonneurFoie) }}</p>
-          <p><strong>A déja fait un don de foie :</strong> {{ afficherValeur(post.utilisateur.aDonneFoie) }}</p>
+          <p><strong>Est donneur de foie :</strong> {{ afficherValeur(post.utilisateur.DonneurFoie) }}</p>
           <p class="champ-date-programmee"><label for="date-visite" class="label-date">Date de la visite programmée :</label><input type="date" v-model="post.nouvelleDate" class="input-date" id="date-visite"/></p>
         </div>
 

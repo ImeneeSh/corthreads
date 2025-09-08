@@ -28,7 +28,7 @@
           <p><strong>Groupe Sanguin :</strong> {{ afficherValeur(post.utilisateur.groupeSang) }}</p>
           <p><strong>Rhesus :</strong> {{ afficherValeur(post.utilisateur.rh) }}</p>
           <p><strong>Wilaya :</strong> {{ afficherValeur(post.utilisateur.wilaya) }}</p>
-          <p><strong>Est donneur de sang :</strong> {{ afficherValeur(post.utilisateur.estDonneurSang) }}</p>
+          <p><strong>Est donneur de sang :</strong> {{ afficherValeur(post.utilisateur.DonneurSang) }}</p>
           <p><strong>Date du dernier don de sang :</strong> {{ afficherValeur(post.utilisateur.dernierDonSang) }}</p>
         </div>
 
