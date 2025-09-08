@@ -18,6 +18,7 @@ import etudeFormulaire from '@/views/etudeFormulaire.vue'
 import ListeDonneursPotentielFoie from "@/views/listeDonneursPotentielFoie.vue"
 import ListeDonneursValidesSang from "@/views/listeDonneursValidésSang.vue"
 import ListeDonneursValidesFoie from "@/views/listeDonneursValidésFoie.vue"
+import ListeDonneursValidesOrgane from "@/views/listeDonneursValidésOrgane.vue"
 
 const routes = [
     {
@@ -114,7 +115,12 @@ const routes = [
         path : '/ListeDonneursValidesFoie',
         name: 'ListeDonneursValidesFoie' ,
         component : ListeDonneursValidesFoie
-    }
+    },
+    {
+        path : '/ListeDonneursValidesOrgane',
+        name: 'ListeDonneursValidesOrgane' ,
+        component : ListeDonneursValidesOrgane
+    },
 ]
 
 const router = createRouter({

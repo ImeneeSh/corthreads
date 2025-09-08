@@ -631,7 +631,7 @@ watch(selectedType, (newValue) => {
   } else if (newValue === 'foie') {
     targetRoute = '/ListeDonneursValidesFoie';
   } else if (newValue === 'organe') {
-    targetRoute = '';
+    targetRoute = '/ListeDonneursValidesOrgane';
   }
 
   if (targetRoute !== currentRoute) {
@@ -652,7 +652,7 @@ onMounted(async () => {
     const reponse = await axios.get('http://localhost:8080/api/listefoie');
     posts.value = reponse.data.map(post => ({
       ...post,
-      nouvelEstDonneurFoie: post.utilisateur.DonneurFoie === true || post.utilisateur.DonneurFoie === "true",
+      nouvelEstDonneurFoie: post.utilisateur.donneurFoie === true || post.utilisateur.donneurFoie === "true",
     }));
 
   } catch (err) {
@@ -704,7 +704,7 @@ const enregistrerInfosUtilisateur = async (post) => {
   const email = post.utilisateur.idUser;
   const params = new URLSearchParams();
 
-  if (post.nouvelEstDonneurFoie !== post.utilisateur.DonneurFoie) {
+  if (post.nouvelEstDonneurFoie !== post.utilisateur.donneurFoie) {
     params.append('donneurFoie', post.nouvelEstDonneurFoie);
   }
 
@@ -717,7 +717,7 @@ const enregistrerInfosUtilisateur = async (post) => {
     await axios.put(`http://localhost:8080/api/utilisateurs/modifier/${email}?${params.toString()}`);
     alert("Informations mises à jour avec succès !");
 
-    post.utilisateur.DonneurFoie = post.nouvelEstDonneurFoie;
+    post.utilisateur.donneurFoie = post.nouvelEstDonneurFoie;
 
   } catch (error) {
     console.error("Erreur lors de la mise à jour :", error);

@@ -30,18 +30,12 @@
           <p><strong>Rhesus :</strong> {{ afficherValeur(post.utilisateur.rh) }}</p>
           <p><strong>Wilaya :</strong> {{ afficherValeur(post.utilisateur.wilaya) }}</p>
           <p class="champ-date-programmee">
-            <label for="donneur-sang" class="label-date">Est donneur de sang :</label>
-            <select v-model="post.nouvelEstDonneurSang" class="input-date" id="donneur-sang">
+            <label for="donneur-organe" class="label-date">Est donneur d'organe :</label>
+            <select v-model="post.nouvelEstDonneurOrgane" class="input-date" id="donneur-organe">
               <option :value="true">Oui</option>
               <option :value="false">Non</option>
             </select>
           </p>
-
-          <p class="champ-date-programmee">
-            <label for="dernier-don" class="label-date">Date du dernier don de sang :</label>
-            <input type="date" v-model="post.nouvelleDateDernierDon" class="input-date" id="dernier-don"/>
-          </p>
-
         </div>
 
         <div class="btn-group">
@@ -624,7 +618,7 @@ const router = useRouter();
 
 const error = ref(null);
 
-const selectedType = ref('sanguin');
+const selectedType = ref('organe');
 const loading = ref(true);
 const posts = ref([]);
 
@@ -655,13 +649,10 @@ const emailVisible = ref(null);
 
 onMounted(async () => {
   try {
-    const reponse = await axios.get('http://localhost:8080/api/listesang');
+    const reponse = await axios.get('http://localhost:8080/api/listeorgane');
     posts.value = reponse.data.map(post => ({
       ...post,
-      nouvelEstDonneurSang: post.utilisateur.donneurSang === true || post.utilisateur.donneurSang === "true",
-      nouvelleDateDernierDon: post.utilisateur.dernierDonSang
-          ? post.utilisateur.dernierDonSang.slice(0, 10)
-          : '',
+      nouvelEstDonneurOrgane: post.utilisateur.donneurOrgane === true || post.utilisateur.donneurOrgane === "true",
     }));
 
   } catch (err) {
@@ -700,7 +691,7 @@ async function confirmerSupp(index) {
   const post = postsAffiches.value[index];
 
   try {
-    await axios.delete(`http://localhost:8080/api/listesang/suppression/${post.idListeSang}`);
+    await axios.delete(`http://localhost:8080/api/listeorgane/suppression/${post.idListeOrgane}`);
     alert("Suppression effectuer avec succès !");
     indexSupp.value = null;
   } catch (error) {
@@ -713,12 +704,8 @@ const enregistrerInfosUtilisateur = async (post) => {
   const email = post.utilisateur.idUser;
   const params = new URLSearchParams();
 
-  if (post.nouvelEstDonneurSang !== post.utilisateur.DonneurSang) {
-    params.append('donneurSang', post.nouvelEstDonneurSang);
-  }
-
-  if (post.nouvelleDateDernierDon !== (post.utilisateur.dernierDonSang?.slice(0, 10) || '')) {
-    params.append('dernierDonSang', post.nouvelleDateDernierDon);
+  if (post.nouvelEstDonneurOrgane !== post.utilisateur.donneurOrgane) {
+    params.append('donneurOrgane', post.nouvelEstDonneurOrgane);
   }
 
   if ([...params].length === 0) {
@@ -730,8 +717,7 @@ const enregistrerInfosUtilisateur = async (post) => {
     await axios.put(`http://localhost:8080/api/utilisateurs/modifier/${email}?${params.toString()}`);
     alert("Informations mises à jour avec succès !");
 
-    post.utilisateur.donneurSang = post.nouvelEstDonneurSang;
-    post.utilisateur.dernierDonSang = post.nouvelleDateDernierDon;
+    post.utilisateur.donneurOrgane = post.nouvelEstDonneurOrgane;
 
   } catch (error) {
     console.error("Erreur lors de la mise à jour :", error);
