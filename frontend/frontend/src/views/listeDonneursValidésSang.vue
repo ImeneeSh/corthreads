@@ -73,7 +73,7 @@
             </button>
 
             <div v-if="indexSupp === index" class="boite-confirmation" @click.stop >
-              <p class="question-confirmation">Êtes-vous sûr de vouloir supprimer cet appel à dons ?</p>
+              <p class="question-confirmation">Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
               <div class="boutons-confirmation">
                 <button class="btn-don btn-supprimer" @click="confirmerSupp(index)">Confirmer</button>
                 <button class="btn-don btn-annuler" @click="annulerSupp">Annuler</button>
