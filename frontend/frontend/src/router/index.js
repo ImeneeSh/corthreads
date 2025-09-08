@@ -15,8 +15,9 @@ import faireDonFoie from '@/views/faireUnDonFoie.vue'
 import listeCandidatsDons from '@/views/listeCandidatsDons.vue'
 import ListeDonneursPotentielSang from '@/views/listeDonneursPotentielSang.vue'
 import etudeFormulaire from '@/views/etudeFormulaire.vue'
-import ListeDonneursPotentielFoie from "@/views/listeDonneursPotentielFoie.vue";
+import ListeDonneursPotentielFoie from "@/views/listeDonneursPotentielFoie.vue"
 import ListeDonneursValidesSang from "@/views/listeDonneursValidésSang.vue"
+import ListeDonneursValidesFoie from "@/views/listeDonneursValidésFoie.vue"
 
 const routes = [
     {
@@ -108,6 +109,11 @@ const routes = [
         path: '/ListeDonneursValidesSang' ,
         name: 'ListeDonneursValidesSang' ,
         component: ListeDonneursValidesSang
+    },
+    {
+        path : '/ListeDonneursValidesFoie',
+        name: 'ListeDonneursValidesFoie' ,
+        component : ListeDonneursValidesFoie
     }
 ]
 
