@@ -53,8 +53,8 @@
           </div>
 
           <div class="form-group">
-            <label>Mot de passe</label>
-            <input type="password" v-model="utilisateur.mdp" />
+            <label>Nouveau mot de passe</label>
+            <input type="password" v-model="nouveauMotDePasse" placeholder="Laisser vide pour ne pas changer" />
           </div>
 
           <div class="btn"><button class="enregistrer" @click="confirmation">Enregistrer</button></div>
@@ -241,6 +241,8 @@ const router= useRouter();
 
 const sangs = ["A","B","AB","O"];
 
+const nouveauMotDePasse = ref("");
+
 const wilayas = [
   "Adrar", "Alger", "Annaba", "Aïn Defla", "Aïn Témouchent", "Batna", "Béchar", "Béjaïa", "Béni Abbès", "Biskra", "Blida", "Bordj Bou Arreridj", "Bordj Badji Mokhtar", "Bouira", "Boumerdès", "Chlef", "Constantine", "Djelfa", "Djanet", "Djijel", "El Bayadh", "El M'Ghair", "El Meniaa", "El Oued", "El Tarf", "Ghardaïa", "Guelma", "Illizi", "In Salah", "In Guezzam", "Khenchela", "Laghouat", "Mascara", "Médéa", "Mila", "Mostaganem", "M'Sila", "Naâma", "Oum El Bouaghi", "Oran", "Ouargla", "Ouled Djellal", "Relizane", "Saïda", "Sétif", "Sidi Bel Abbès", "Skikda", "Souk Ahras", "Tamanrasset", "Tébessa", "Tiaret", "Timimoun", "Tindouf", "Tissemsilt", "Tizi Ouzou", "Tipaza", "Tlemcen", "Touggourt"
 ];
@@ -297,17 +299,25 @@ async function valider() {
 
   const modifs = {};
   for (const [cle, valeur] of Object.entries(utilisateur.value)) {
-    if(valeur !== null && valeur !== undefined) {
+    if(cle !== "mdp" && valeur !== null && valeur !== undefined) {
       modifs[cle] = valeur ;
     }
+  }
+
+  if(nouveauMotDePasse.value.trim() !== ""){
+    modifs.mdp= nouveauMotDePasse.value ;
   }
 
   const aujourdhuis = new Date().toISOString().split('T')[0];
   modifs.dateDerniereModification = aujourdhuis;
 
   try {
-    const params = new URLSearchParams(modifs).toString();
-    await axios.put(`http://localhost:8080/api/utilisateurs/modifier/${idUser}?${params}`);
+    await axios.put(`http://localhost:8080/api/utilisateurs/modifier/${idUser}`, modifs, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
     alert("Modifications enregistrées !");
     await router.push('/');
   }catch (error){
