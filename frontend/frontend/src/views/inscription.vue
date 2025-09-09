@@ -137,6 +137,38 @@ const formData = reactive({
 
 provide("formData", formData);
 
+function construirePayload() {
+  if (formData.role === "Medecin") {
+    return {
+      idUser: formData.idUser,
+      nom: formData.nom,
+      prenom: formData.prenom,
+      wilaya: formData.wilaya,
+      dateNaissance: formData.dateNaissance,
+      genre: formData.genre,
+      role: formData.role,
+      mdp: formData.mdp,
+      specialite: formData.specialite,
+      etablissement: formData.etablissement
+    };
+  } else if (formData.role === "Citoyen") {
+    return {
+      idUser: formData.idUser,
+      nom: formData.nom,
+      prenom: formData.prenom,
+      wilaya: formData.wilaya,
+      dateNaissance: formData.dateNaissance,
+      genre: formData.genre,
+      role: formData.role,
+      mdp: formData.mdp,
+      groupeSang: formData.groupeSang,
+      rh: formData.rh
+    };
+  }
+  return {};
+}
+
+
 const etapesCitoyen = [
   EtapeRole,
   EtapeMail,
@@ -167,7 +199,8 @@ async function inscription(){
   chargement.value = true ;
   erreurInsc.value = '' ;
   try {
-    const reponse = await axios.post("http://localhost:8080/api/utilisateurs/inscription" , formData);
+    console.log("Payload envoyé :", JSON.stringify(construirePayload(), null, 2));
+    const reponse = await axios.post("http://localhost:8080/api/utilisateurs/inscription" , construirePayload());
     console.log("Insciption réussie :" , reponse.data);
     sessionStorage.setItem('inscriptionReussie' , 'true');
     sessionStorage.setItem('idUser', formData.idUser);
@@ -176,9 +209,9 @@ async function inscription(){
     sessionStorage.setItem('role', formData.role);
     await router.push('/');
   }catch(error) {
-    console.log("Erreur lors de l'inscription :" , error);
-    erreurInsc.value = "L'inscription a échoué. Veuillez réessayer." ;
-  } finally {
+    console.error("Erreur lors de l'inscription :", error.response?.data || error.message);
+    erreurInsc.value = error.response?.data?.message || "L'inscription a échoué. Veuillez réessayer." ;
+  }finally {
     chargement.value = false ;
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="etape-info-cit" v-if="formData.role === 'Citoyen'">
     <div class="row">
-      <select v-model="formData.genre" required>
+      <select v-model="selectedGenre" required>
         <option disabled value="">Genre</option>
-        <option v-for="(genre, i) in genres" :key="i" :value="genre">{{ genre }} </option>
+        <option v-for="(value, key) in genres" :key="key" :value="key">{{ key }}</option>
       </select>
 
       <input type="date" v-model="formData.dateNaissance" required />
@@ -22,9 +22,9 @@
     </div>
 
     <div class="row">
-      <select v-model="formData.rh" required>
+      <select v-model="selectedRh" required>
         <option disabled value="">Rhesus</option>
-        <option v-for="(rh, i) in rhs" :key="i" :value="rh">{{ rh }} </option>
+        <option v-for="(value, key) in rhs" :key="key" :value="key">{{ key }}</option>
       </select>
     </div>
 
@@ -144,30 +144,55 @@ select:focus,input[type="date"]:focus {
 </style>
 <script setup>
 
-import {computed, inject} from "vue";
+import {watch, computed, ref, inject} from "vue";
 
 const formData = inject("formData");
 const chargement = inject("chargement");
-const erreurInsc = inject ("erreurInsc") ;
+const erreurInsc = inject("erreurInsc");
+
+const selectedGenre = ref("");
+const selectedRh = ref("");;
 
 
 const wilayas = [
   "Adrar", "Alger", "Annaba", "Aïn Defla", "Aïn Témouchent", "Batna", "Béchar", "Béjaïa", "Béni Abbès", "Biskra", "Blida", "Bordj Bou Arreridj", "Bordj Badji Mokhtar", "Bouira", "Boumerdès", "Chlef", "Constantine", "Djelfa", "Djanet", "Djijel", "El Bayadh", "El M'Ghair", "El Meniaa", "El Oued", "El Tarf", "Ghardaïa", "Guelma", "Illizi", "In Salah", "In Guezzam", "Khenchela", "Laghouat", "Mascara", "Médéa", "Mila", "Mostaganem", "M'Sila", "Naâma", "Oum El Bouaghi", "Oran", "Ouargla", "Ouled Djellal", "Relizane", "Saïda", "Sétif", "Sidi Bel Abbès", "Skikda", "Souk Ahras", "Tamanrasset", "Tébessa", "Tiaret", "Timimoun", "Tindouf", "Tissemsilt", "Tizi Ouzou", "Tipaza", "Tlemcen", "Touggourt"
 ]
 
-const genres = [
-    "Femme" , "Homme" , "Je préfère ne pas répondre"
-]
+const genres = {
+  "Homme": "Homme",
+  "Femme": "Femme",
+};
 
 const grpsangs = [
     "A" , "B" , "AB" , "O"
 ]
 
-const rhs = [
-   "positif" , "negatif"
-]
+const rhs = {
+  "Positif": "positif",
+  "Négatif": "negatif"
+};
 
-const peutContinuer = computed(() =>
-    formData.genre && formData.dateNaissance && formData.wilaya && formData.groupeSang && formData.rh
-);
+watch(selectedGenre, (newVal) => {
+  formData.genre = genres[newVal];
+});
+
+watch(selectedRh, (newVal) => {
+  formData.rh = rhs[newVal];
+});
+
+const peutContinuer = computed(() => {
+  if (formData.role === "Citoyen") {
+    return formData.genre && formData.dateNaissance && formData.wilaya && formData.groupeSang && formData.rh;
+  } else if (formData.role === "Medecin") {
+    return (
+        formData.genre &&
+        formData.dateNaissance &&
+        formData.wilaya &&
+        formData.specialite &&
+        formData.etablissement
+    );
+  }
+  return false;
+});
+
 </script>

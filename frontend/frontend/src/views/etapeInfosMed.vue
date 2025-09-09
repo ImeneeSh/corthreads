@@ -166,10 +166,22 @@ const wilayas = [
 ]
 
 const genres = [
-  "Femme" , "Homme" , "Je préfère ne pas répondre"
+  "Femme" , "Homme"
 ]
 
-const peutContinuer = computed(() =>
-    formData.genre && formData.dateNaissance && formData.wilaya && formData.groupeSanguin && formData.rhesus
-);
+const peutContinuer = computed(() => {
+  if (formData.role === "Citoyen") {
+    return formData.genre && formData.dateNaissance && formData.wilaya && formData.groupeSang && formData.rh;
+  } else if (formData.role === "Medecin") {
+    return (
+        formData.genre &&
+        formData.dateNaissance &&
+        formData.wilaya &&
+        formData.specialite &&
+        formData.etablissement
+    );
+  }
+  return false;
+});
+
 </script>
