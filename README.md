@@ -108,11 +108,12 @@ Doctors have extended rights:
 ```
 corthreads/
 │── backend/       
-│── frontend/       
-│── design/        
+│── frontend/             
 │── screenshots/    
 │── demo/          
-│── README.md       
+│── README.md
+│── LICENSE
+│── .gitgnore       
 ```
 
 ## 💗 Notes
@@ -124,5 +125,6 @@ corthreads/
 
 This project is licensed under the MIT License.
 You are free to use, modify, and distribute this project, but please give credit.
+
 
 
