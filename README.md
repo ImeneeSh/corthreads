@@ -1,4 +1,4 @@
-# 💗 Corthreads 
+#  Corthreads 
 
 Corthreads is a full-stack web application that serves as a solidarity platform connecting donors and recipients of biological products (blood and organs) in Algeria.
 
@@ -125,6 +125,7 @@ corthreads/
 
 This project is licensed under the MIT License.
 You are free to use, modify, and distribute this project, but please give credit.
+
 
 
 
