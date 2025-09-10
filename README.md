@@ -2,7 +2,7 @@
 
 Corthreads is a full-stack web application that serves as a solidarity platform connecting donors and recipients of biological products (blood and organs) in Algeria.
 
-## 💗 The Meaning Behind the Name
+##  The Meaning Behind the Name
 
 The name Corthreads is not a coincidence:
 
@@ -13,15 +13,15 @@ Together, they symbolize the invisible threads connecting the hearts of donors a
 
 The dominant pink color is not just an aesthetic choice, but a softer representation of blood and also a tribute to Pink October.
 
-## 💗 Demo & Design
+##  Demo & Design
 
-### ♡ Database Schema
+###  Database Schema
 ![Database Schema](./screenshots/corthreadsDb.drawio.png)
 
-### ♡ UI/UX Design (Figma)
+###  UI/UX Design (Figma)
 [**View Full Design on Figma**](https://www.figma.com/design/1QYrqQESOQ5DM5vpOmKLQx/corthreads-design?node-id=0-1&t=xvQv6qhzC4GLkE7j-1)
 
-### ♡ Screenshots
+###  Screenshots
 
 | Homepage | Login | Donation Requests |
 |----------|-------|-------------------|
@@ -40,12 +40,12 @@ The dominant pink color is not just an aesthetic choice, but a softer representa
 | ![Share a Testimony](./screenshots/partagerTemognage.png) | ![Vertical Menu](./screenshots/menuVerticale.png) | ![Success Message](./screenshots/messagereussite.png) |
 
 
-### ♡ Video Demo
+###  Video Demo
 [Watch the demo video](./demo/corthreads-demo.mp4) *(Download required)*
 
 *Note: The video file is currently only available for download due to its file size. We're working on providing a streaming option soon.*
 
-##  💗 Technical Stack
+##   Technical Stack
 
 - **Design**: Figma
 - **Backend**: Java with Spring Boot
@@ -54,9 +54,9 @@ The dominant pink color is not just an aesthetic choice, but a softer representa
 - **Responsive design**: Works on all screen sizes
 - **Language**: French
 
-##  💗 Features & Functionality
+##   Features & Functionality
 
-### ♡ For Anonymous Users
+###  For Anonymous Users
 - Browse donation requests shared on the platform
 - Filter requests by criteria:
   - Donation type: Blood – Liver – Organ
@@ -64,7 +64,7 @@ The dominant pink color is not just an aesthetic choice, but a softer representa
   - Urgency level
 - Read testimonies about the positive impact of donations
 
-### ♡ User Registration
+###  User Registration
 To become a donor, share a donation request, or post a testimony, users must sign up/log in.
 
 **Authentication options:**
@@ -75,7 +75,7 @@ To become a donor, share a donation request, or post a testimony, users must sig
 - Citizen
 - Doctor
 
-### ♡ As a Citizen
+###  As a Citizen
 - Apply to donate by selecting a donation type
 - Submit an application or answer a questionnaire
 - Applications are reviewed by a Doctor
@@ -85,7 +85,7 @@ To become a donor, share a donation request, or post a testimony, users must sig
 - Post donation requests
 - Share testimonies
 
-### ♡ As a Doctor
+###  As a Doctor
 Doctors have extended rights:
 - Review donor applications and questionnaires
 - Validate or reject potential donors
@@ -96,14 +96,14 @@ Doctors have extended rights:
 - Their information is added to the Validated Donors List
 - Doctors connect validated donors with potential recipients by contacting them via email
 
-### ♡ Additional Features
+###  Additional Features
 - Contact form for questions or support
 - Ability to update registration information (once every 30 days)
 - Security:
   - Confidential handling of personal data
   - Passwords are encrypted
 
-## 💗 Project Structure
+##  Project Structure
 
 ```
 corthreads/
@@ -116,15 +116,16 @@ corthreads/
 │── .gitgnore       
 ```
 
-## 💗 Notes
+##  Notes
 
 - All user data is strictly confidential
 - Passwords are stored securely using encryption
 
-## 💗 License
+##  License
 
 This project is licensed under the MIT License.
 You are free to use, modify, and distribute this project, but please give credit.
+
 
 
 
