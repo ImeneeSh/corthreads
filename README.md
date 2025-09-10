@@ -41,7 +41,7 @@ The dominant pink color is not just an aesthetic choice, but a softer representa
 
 
 ### Video Demo
- [Watch the demo video]()
+ [Watch the demo video](./demo/corthreads-demo.mp4)
 
 ##  Technical Stack
 
@@ -122,3 +122,4 @@ corthreads/
 
 This project is licensed under the MIT License.
 You are free to use, modify, and distribute this project, but please give credit.
+
